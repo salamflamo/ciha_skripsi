@@ -90,6 +90,7 @@ class Hitung extends CI_Controller
     var $m_keputusan = [];
     var $k_positif = [];
     var $k_negatif = [];
+    var $j_alternatif = [];
     private function kuadrat()
     {
         for ($i=0; $i < count($this->matriks); $i++) {
@@ -166,6 +167,20 @@ class Hitung extends CI_Controller
           }
           $this->k_positif[$arr_name[$j]] = max($arr);
           $this->k_negatif[$arr_name[$j]] = min($arr);
+        }
+    }
+    private function alternatif()
+    {
+        $arr_name = [];
+        foreach ($this->m_keputusan[0] as $key => $value) {
+            $arr_name [] = $key;
+        }
+        for ($j=0; $j < count($arr_name); $j++) {
+          $tot = 0;
+          $arr = [];
+          for ($i=0; $i < count($this->m_keputusan); $i++) {
+            $arr[] = $this->m_keputusan[$i][$arr_name[$j]];
+          }
         }
     }
     private function createTableMatriks()
@@ -284,7 +299,7 @@ class Hitung extends CI_Controller
     private function createTableSolusiIdeal()
     {
         $table = "";
-        $table .= "<h3>Langkah 6 : Tabel Hasil Keputusan</h3>";
+        $table .= "<h3>Langkah 6 : Tabel Hasil Solusi Ideal Positif Negatif</h3>";
         $table .= "<table border='1px black'>";
         $table .= "<thead>";
         $table .= "<td>nama</td>";
