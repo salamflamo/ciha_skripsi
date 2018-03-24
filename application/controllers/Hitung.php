@@ -8,78 +8,37 @@ class Hitung extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->database();
     }
 
     var $target = [
-      'passing' => 4,
-      'servis' => 5,
-      'block' => 5,
-      'smash' => 5,
-      'receive' => 2,
-      'kekuatan' => 4,
-      'kelincahan' => 5,
-      'daya_lentur' => 5,
-      'daya_ledak_otot' => 5,
-      'daya_tahan' => 4,
-      'kecepatan' => 4,
+      'passing' => 1,
+      'servis' => 1,
+      'block' => 1,
+      'smash' => 1,
+      'receive' => 1,
+      'kekuatan' => 1,
+      'kelincahan' => 1,
+      'daya_lentur' => 1,
+      'daya_ledak_otot' => 1,
+      'daya_tahan' => 1,
+      'kecepatan' => 1,
     ];
 
     var $matriks = [
       [
-        'nama' => 'Jonas',
-        'passing' => 4,
-        'servis' => 4,
-        'block' => 4,
-        'smash' => 5,
-        'receive' => 3,
-        'kekuatan' => 5,
-        'kelincahan' => 4,
-        'daya_lentur' => 4,
-        'daya_ledak_otot' => 4,
-        'daya_tahan' => 4,
-        'kecepatan' => 4,
-      ],
-      [
-        'nama' => 'Sofi',
-        'passing' => 4,
-        'servis' => 4,
-        'block' => 4,
-        'smash' => 5,
-        'receive' => 4,
-        'kekuatan' => 5,
-        'kelincahan' => 4,
-        'daya_lentur' => 5,
-        'daya_ledak_otot' => 4,
-        'daya_tahan' => 4,
-        'kecepatan' => 4,
-      ],
-      [
-        'nama' => 'Dino',
-        'passing' => 4,
-        'servis' => 4,
-        'block' => 5,
-        'smash' => 5,
-        'receive' => 4,
-        'kekuatan' => 4,
-        'kelincahan' => 4,
-        'daya_lentur' => 4,
-        'daya_ledak_otot' => 4,
-        'daya_tahan' => 4,
-        'kecepatan' => 4,
-      ],
-      [
-        'nama' => 'Hadi',
-        'passing' => 4,
-        'servis' => 4,
-        'block' => 5,
-        'smash' => 5,
-        'receive' => 5,
-        'kekuatan' => 4,
-        'kelincahan' => 4,
-        'daya_lentur' => 4,
-        'daya_ledak_otot' => 4,
-        'daya_tahan' => 4,
-        'kecepatan' => 4,
+        'nama' => 'Name',
+        'passing' => 1,
+        'servis' => 1,
+        'block' => 1,
+        'smash' => 1,
+        'receive' => 1,
+        'kekuatan' => 1,
+        'kelincahan' => 1,
+        'daya_lentur' => 1,
+        'daya_ledak_otot' => 1,
+        'daya_tahan' => 1,
+        'kecepatan' => 1,
       ],
     ];
 
@@ -90,7 +49,23 @@ class Hitung extends CI_Controller
     var $m_keputusan = [];
     var $k_positif = [];
     var $k_negatif = [];
-    var $j_alternatif = [];
+    var $d_value =[];
+    var $sum_d = [];
+    var $sqrt_d = [];
+    var $d_value_n =[];
+    var $sum_d_n = [];
+    var $sqrt_d_n = [];
+    var $preferensi = [];
+    private function setVariable($flag)
+    {
+        $data = $this->db->query("SELECT nama,passing,servis,block,smash,receive,kekuatan,
+          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM tb_nilai")->result_array();
+        $this->matriks = (!empty($data)) ? $data : [];
+        $target = $this->db->query("SELECT passing,servis,block,smash,receive,kekuatan,
+          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM ms_target WHERE flag_untuk=$flag")->row_array();
+        $this->target = (!empty($target)) ? $target : [];
+        // print_r($this->target);
+    }
     private function kuadrat()
     {
         for ($i=0; $i < count($this->matriks); $i++) {
@@ -103,6 +78,8 @@ class Hitung extends CI_Controller
           }
           $this->h_kuadrat[] = $hasil;
         }
+        echo "Langkah 0<br><br>";
+        print_r($this->h_kuadrat);
     }
     private function akarKuadrat()
     {
@@ -122,6 +99,9 @@ class Hitung extends CI_Controller
           $this->jum_kuadrat[$arr_name[$j]] = $tot;
           $this->a_kuadrat[$arr_name[$j]] = sqrt($tot);
         }
+        echo "Langkah 1<br><br>";
+        print_r($this->jum_kuadrat);
+        print_r($this->a_kuadrat);
     }
     private function normalisasi()
     {
@@ -135,6 +115,8 @@ class Hitung extends CI_Controller
         }
         $this->h_normalisasi[] = $hasil;
       }
+      echo "Langkah 2<br><br>";
+      print_r($this->h_normalisasi);
     }
     private function keputusan()
     {
@@ -148,6 +130,8 @@ class Hitung extends CI_Controller
         }
         $this->m_keputusan[] = $hasil;
       }
+      echo "Langkah 3<br><br>";
+      print_r($this->m_keputusan);
     }
     private function solusiIdealPlusMinus()
     {
@@ -168,26 +152,123 @@ class Hitung extends CI_Controller
           $this->k_positif[$arr_name[$j]] = max($arr);
           $this->k_negatif[$arr_name[$j]] = min($arr);
         }
+        echo "Langkah 4<br><br>";
+        print_r($this->k_positif);
+        print_r($this->k_negatif);
     }
-    private function alternatif()
+    private function hitungDValue()
     {
-        $arr_name = [];
-        foreach ($this->m_keputusan[0] as $key => $value) {
-            $arr_name [] = $key;
-        }
-        for ($j=0; $j < count($arr_name); $j++) {
-          $tot = 0;
-          $arr = [];
-          for ($i=0; $i < count($this->m_keputusan); $i++) {
-            $arr[] = $this->m_keputusan[$i][$arr_name[$j]];
+      for ($i=0; $i < count($this->m_keputusan); $i++) {
+        $arr = [];
+        foreach ($this->m_keputusan[$i] as $key => $value) {
+          if ($key == 'nama') {
+            $arr[$key] = $value;
+          } else {
+            $hasil = $this->k_positif[$key] - $value;
+            $arr[$key] = pow($hasil,2);
           }
         }
+        $this->d_value[] = $arr;
+      }
+      echo "Langkah 5<br><br>";
+      print_r($this->d_value);
     }
-    private function createTableMatriks()
+    private function hitungDValueNegatif()
     {
+      for ($i=0; $i < count($this->m_keputusan); $i++) {
+        $arr = [];
+        foreach ($this->m_keputusan[$i] as $key => $value) {
+          if ($key == 'nama') {
+            $arr[$key] = $value;
+          } else {
+            $hasil = $this->k_negatif[$key] - $value;
+            $arr[$key] = pow($hasil,2);
+          }
+        }
+        $this->d_value_n[] = $arr;
+      }
+      echo "Langkah 6<br><br>";
+      print_r($this->d_value_n);
+    }
+    private function sumSqrtD()
+    {
+      $arr = [];
+      $array = [];
+      for ($i=0; $i < count($this->d_value); $i++) {
+        $hasil = 0;
+        foreach ($this->d_value[$i] as $key => $value) {
+          if ($key == 'nama') {
+            continue;
+          } else {
+            $hasil += $value;
+          }
+        }
+        $arr[] = $hasil;
+        $array[] = sqrt($hasil);
+      }
+      $this->sum_d = $arr;
+      $this->sqrt_d = $array;
+      echo "Langkah 7<br><br>";
+      print_r($this->sum_d);
+      print_r($this->sqrt_d);
+    }
+    private function sumSqrtDNegatif()
+    {
+      $arr = [];
+      $array = [];
+      for ($i=0; $i < count($this->d_value_n); $i++) {
+        $hasil = 0;
+        foreach ($this->d_value_n[$i] as $key => $value) {
+          if ($key == 'nama') {
+            continue;
+          } else {
+            $hasil += $value;
+          }
+        }
+        $arr[] = $hasil;
+        $array[] = sqrt($hasil);
+      }
+      $this->sum_d_n = $arr;
+      $this->sqrt_d_n = $array;
+      echo "Langkah 8<br><br>";
+      print_r($this->sum_d_n);
+      print_r($this->sqrt_d_n);
+    }
+    public function hitungPrefrensi()
+    {
+        for ($i=0; $i < count($this->sqrt_d_n); $i++) {
+          $this->preferensi[] = $this->sqrt_d_n[$i] / ($this->sqrt_d_n[$i]+$this->sqrt_d[$i]);
+        }
+        echo "Langkah 9<br><br>";
+        print_r($this->preferensi);
+    }
+
+
+    private function call($flag)
+    {
+      // NOTE: untuk memberikan nilai baru variabel global
+      $this->setVariable($flag);
+      // NOTE: untuk logika
+      $this->kuadrat();
+      $this->akarKuadrat();
+      $this->normalisasi();
+      $this->keputusan();
+      $this->solusiIdealPlusMinus();
+      $this->hitungDValue();
+      $this->sumSqrtD();
+      $this->hitungDValueNegatif();
+      $this->sumSqrtDNegatif();
+      $this->hitungPrefrensi();
+      // for ($i=0; $i < count($this->preferensi); $i++) {
+      //   $this->db->insert('tb_prefrensi',['hasil_pref'=>$this->preferensi[$i],'flag_untuk'=>$flag]);
+      // }
+    }
+    public function createTableMatriks()
+    {
+        // $this->call();
         $table = "";
         $table .= "<h3>Langkah 1 : Tabel Matriks</h3>";
-        $table .= "<table border='1px black'>";
+        $table .= "<table class='table table-stripped table-hover datatable'>";
         $table .= "<thead>";
         foreach ($this->matriks[0] as $key => $value) {
           $table .= "<td>".$key."</td>";
@@ -203,7 +284,6 @@ class Hitung extends CI_Controller
         }
         $table .= "</tbody>";
         $table .= "</table>";
-        $table .= "=============================================";
         echo $table;
     }
     private function createTableKuadrat()
@@ -321,29 +401,22 @@ class Hitung extends CI_Controller
         echo $table;
     }
 
-    public function main()
+
+    public function main($flag='')
     {
-        // NOTE: untuk logika
-        $this->kuadrat();
-        $this->akarKuadrat();
-        $this->normalisasi();
-        $this->keputusan();
-        $this->solusiIdealPlusMinus();
+        if (empty($flag)) {
+          http_response_code(500);
+          exit;
+        }
+        $this->call($flag);
         // NOTE: untuk menampilkan data
-        $this->createTableMatriks();
-        $this->createTableKuadrat();
-        $this->createTableAkar();
-        $this->createTableNormalisasi();
-        $this->createTableKeputusan();
-        $this->createTableSolusiIdeal();
+        // $this->createTableMatriks();
+        // $this->createTableKuadrat();
+        // $this->createTableAkar();
+        // $this->createTableNormalisasi();
+        // $this->createTableKeputusan();
+        // $this->createTableSolusiIdeal();
         // var_dump($this->h_kuadrat);
     }
 
-    public function anu($value='')
-    {
-      $object = new StdClass;
-      $object->foo = 1;
-      $object->bar = 2;
-      var_dump((array)$object );
-    }
 }
