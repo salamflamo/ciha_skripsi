@@ -56,6 +56,9 @@ class Hitung extends CI_Controller
     var $sum_d_n = [];
     var $sqrt_d_n = [];
     var $preferensi = [];
+
+    var $table_besar = [];
+
     private function setVariable($flag)
     {
         $data = $this->db->query("SELECT nama,passing,servis,block,smash,receive,kekuatan,
@@ -78,8 +81,8 @@ class Hitung extends CI_Controller
           }
           $this->h_kuadrat[] = $hasil;
         }
-        echo "Langkah 0<br><br>";
-        print_r($this->h_kuadrat);
+        // echo "Langkah 0<br><br>";
+        // print_r($this->h_kuadrat);
     }
     private function akarKuadrat()
     {
@@ -99,9 +102,9 @@ class Hitung extends CI_Controller
           $this->jum_kuadrat[$arr_name[$j]] = $tot;
           $this->a_kuadrat[$arr_name[$j]] = sqrt($tot);
         }
-        echo "Langkah 1<br><br>";
-        print_r($this->jum_kuadrat);
-        print_r($this->a_kuadrat);
+        // echo "Langkah 1<br><br>";
+        // print_r($this->jum_kuadrat);
+        // print_r($this->a_kuadrat);
     }
     private function normalisasi()
     {
@@ -115,8 +118,8 @@ class Hitung extends CI_Controller
         }
         $this->h_normalisasi[] = $hasil;
       }
-      echo "Langkah 2<br><br>";
-      print_r($this->h_normalisasi);
+      // echo "Langkah 2<br><br>";
+      // print_r($this->h_normalisasi);
     }
     private function keputusan()
     {
@@ -130,8 +133,8 @@ class Hitung extends CI_Controller
         }
         $this->m_keputusan[] = $hasil;
       }
-      echo "Langkah 3<br><br>";
-      print_r($this->m_keputusan);
+      // echo "Langkah 3<br><br>";
+      // print_r($this->m_keputusan);
     }
     private function solusiIdealPlusMinus()
     {
@@ -152,9 +155,9 @@ class Hitung extends CI_Controller
           $this->k_positif[$arr_name[$j]] = max($arr);
           $this->k_negatif[$arr_name[$j]] = min($arr);
         }
-        echo "Langkah 4<br><br>";
-        print_r($this->k_positif);
-        print_r($this->k_negatif);
+        // echo "Langkah 4<br><br>";
+        // print_r($this->k_positif);
+        // print_r($this->k_negatif);
     }
     private function hitungDValue()
     {
@@ -170,8 +173,8 @@ class Hitung extends CI_Controller
         }
         $this->d_value[] = $arr;
       }
-      echo "Langkah 5<br><br>";
-      print_r($this->d_value);
+      // echo "Langkah 5<br><br>";
+      // print_r($this->d_value);
     }
     private function hitungDValueNegatif()
     {
@@ -187,8 +190,8 @@ class Hitung extends CI_Controller
         }
         $this->d_value_n[] = $arr;
       }
-      echo "Langkah 6<br><br>";
-      print_r($this->d_value_n);
+      // echo "Langkah 6<br><br>";
+      // print_r($this->d_value_n);
     }
     private function sumSqrtD()
     {
@@ -208,9 +211,9 @@ class Hitung extends CI_Controller
       }
       $this->sum_d = $arr;
       $this->sqrt_d = $array;
-      echo "Langkah 7<br><br>";
-      print_r($this->sum_d);
-      print_r($this->sqrt_d);
+      // echo "Langkah 7<br><br>";
+      // print_r($this->sum_d);
+      // print_r($this->sqrt_d);
     }
     private function sumSqrtDNegatif()
     {
@@ -230,17 +233,17 @@ class Hitung extends CI_Controller
       }
       $this->sum_d_n = $arr;
       $this->sqrt_d_n = $array;
-      echo "Langkah 8<br><br>";
-      print_r($this->sum_d_n);
-      print_r($this->sqrt_d_n);
+      // echo "Langkah 8<br><br>";
+      // print_r($this->sum_d_n);
+      // print_r($this->sqrt_d_n);
     }
     public function hitungPrefrensi()
     {
         for ($i=0; $i < count($this->sqrt_d_n); $i++) {
           $this->preferensi[] = $this->sqrt_d_n[$i] / ($this->sqrt_d_n[$i]+$this->sqrt_d[$i]);
         }
-        echo "Langkah 9<br><br>";
-        print_r($this->preferensi);
+        // echo "Langkah 9<br><br>";
+        // print_r($this->preferensi);
     }
 
 
@@ -266,9 +269,8 @@ class Hitung extends CI_Controller
     public function createTableMatriks()
     {
         // $this->call();
-        $table = "";
-        $table .= "<h3>Langkah 1 : Tabel Matriks</h3>";
-        $table .= "<table class='table table-stripped table-hover datatable'>";
+        $table = "<h3>Langkah 1</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->matriks[0] as $key => $value) {
           $table .= "<td>".$key."</td>";
@@ -284,13 +286,12 @@ class Hitung extends CI_Controller
         }
         $table .= "</tbody>";
         $table .= "</table>";
-        echo $table;
+        return $table;
     }
     private function createTableKuadrat()
     {
-        $table = "";
-        $table .= "<h3>Langkah 2 : Tabel Matriks Kuadrat</h3>";
-        $table .= "<table border='1px black'>";
+        $table = "<h3>Langkah 2</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->h_kuadrat[0] as $key => $value) {
           $table .= "<td>".$key."</td>";
@@ -306,14 +307,13 @@ class Hitung extends CI_Controller
         }
         $table .= "</tbody>";
         $table .= "</table>";
-        $table .= "=============================================";
-        echo $table;
+        return $table;
     }
     private function createTableAkar()
     {
         $table = "";
-        $table .= "<h3>Langkah 3 : Tabel Akar Kuadrat Total</h3>";
-        $table .= "<table border='1px black'>";
+        $table = "<h3>Langkah 3</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         $table .= "<td>Faktor</td>";
         $table .= "<td>Total</td>";
@@ -327,14 +327,13 @@ class Hitung extends CI_Controller
           $table .= "</tr>";
         }
         $table .= "</table>";
-        $table .= "=============================================";
-        echo $table;
+        return $table;
     }
     private function createTableNormalisasi()
     {
         $table = "";
-        $table .= "<h3>Langkah 4 : Tabel Hasil Normalisasi</h3>";
-        $table .= "<table border='1px black'>";
+        $table = "<h3>Langkah 4</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->h_normalisasi[0] as $key => $value) {
           $table .= "<td>".$key."</td>";
@@ -350,14 +349,13 @@ class Hitung extends CI_Controller
         }
         $table .= "</tbody>";
         $table .= "</table>";
-        $table .= "=============================================";
-        echo $table;
+        return $table;
     }
     private function createTableKeputusan()
     {
         $table = "";
-        $table .= "<h3>Langkah 5 : Tabel Hasil Keputusan</h3>";
-        $table .= "<table border='1px black'>";
+        $table = "<h3>Langkah 5</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->m_keputusan[0] as $key => $value) {
           $table .= "<td>".$key."</td>";
@@ -373,14 +371,13 @@ class Hitung extends CI_Controller
         }
         $table .= "</tbody>";
         $table .= "</table>";
-        $table .= "=============================================";
-        echo $table;
+        return $table;
     }
     private function createTableSolusiIdeal()
     {
         $table = "";
-        $table .= "<h3>Langkah 6 : Tabel Hasil Solusi Ideal Positif Negatif</h3>";
-        $table .= "<table border='1px black'>";
+        $table = "<h3>Langkah 6</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         $table .= "<td>nama</td>";
         foreach ($this->k_positif as $key => $value) {
@@ -397,8 +394,65 @@ class Hitung extends CI_Controller
           $table .= "<td>".$value."</td>";
         }
         $table .= "</tr></tbody></table>";
-        $table .= "=============================================";
-        echo $table;
+        return $table;
+    }
+
+    private function createTableDvalue()
+    {
+
+      $table = "<h3>Langkah 7</h3>";
+      $table .= "<table class='table table-stripped table-hover'>";
+      $table .= "<thead>";
+      foreach ($this->d_value[0] as $key => $value) {
+        $table .= "<td>".$key."</td>";
+      }
+      $table .= "<td>D</td>";
+      $table .= "<td>Sum</td>";
+      $table .= "</thead>";
+
+      $table .= "<tbody>";
+      for ($i=0; $i < count($this->d_value); $i++) {
+        $table .= "<tr>";
+        foreach ($this->d_value[$i] as $key => $value) {
+          $table .= "<td>".$value."</td>";
+        }
+        $table .= "<td>D+</td>";
+        $table .= "<td>".$this->sum_d[$i]."</td>";
+        $table .= "</tr>";
+      }
+
+      for ($i=0; $i < count($this->d_value_n); $i++) {
+        $table .= "<tr>";
+        foreach ($this->d_value_n[$i] as $key => $value) {
+          $table .= "<td>".$value."</td>";
+        }
+        $table .= "<td>D-</td>";
+        $table .= "<td>".$this->sum_d_n[$i]."</td>";
+        $table .= "</tr>";
+      }
+      $table .= "</tbody>";
+      $table .= "</table>";;
+        // print_r($this->d_value);
+        // print_r($this->sum_d);
+        // print_r($this->d_value_n);
+        // print_r($this->sum_d_n);
+        return $table;
+    }
+
+    private function createTablePreferensi()
+    {
+        $table = "<h3>Table Prefrensi</h3>";
+        $table .= "<table class='table table-stripped table-hover'>";
+        $table .= "<thead><td>Nama</td><td>Prefrensi</td>";
+        $table .= "<tbody>";
+        for ($i=0; $i < count($this->d_value); $i++) {
+          $table .= "<tr>";
+          $table .= "<td>".$this->d_value[$i]['nama']."</td>";
+          $table .= "<td>".$this->preferensi[$i]."</td>";
+          $table .= "</tr>";
+        }
+        $table .= "</tbody></table>";
+        return $table;
     }
 
 
@@ -410,13 +464,17 @@ class Hitung extends CI_Controller
         }
         $this->call($flag);
         // NOTE: untuk menampilkan data
-        // $this->createTableMatriks();
-        // $this->createTableKuadrat();
-        // $this->createTableAkar();
-        // $this->createTableNormalisasi();
-        // $this->createTableKeputusan();
-        // $this->createTableSolusiIdeal();
+        $this->table_besar[] = $this->createTableMatriks();
+        $this->table_besar[] = $this->createTableKuadrat();
+        $this->table_besar[] = $this->createTableAkar();
+        $this->table_besar[] = $this->createTableNormalisasi();
+        $this->table_besar[] = $this->createTableKeputusan();
+        $this->table_besar[] = $this->createTableSolusiIdeal();
+        $this->table_besar[] = $this->createTableDvalue();
+        $this->table_besar[] = $this->createTablePreferensi();
+        // $this->createTablePreferensi();
         // var_dump($this->h_kuadrat);
+        echo json_encode($this->table_besar);
     }
 
 }

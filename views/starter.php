@@ -53,7 +53,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini sidebar-collapse" style="height: auto; min-height: 100%;">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -190,6 +190,127 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <h1>Nilai tidak boleh lebih dari atau kurang dari 5</h1>
+              </div>
+              <form class="form" role="form" action="<?= base_url('main/create_nilai');?>" name="form_nilai" method="post">
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Pengukuran</label>
+                          <select required class="form-control" name="flag_untuk">
+                            <?php foreach ($pengukuran as $v): ?>
+                              <option value="<?= $v->id;?>"><?= $v->nama_flag;?></option>
+                            <?php endforeach; ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Nama</label>
+                          <input required type="text" name="nama" class="form-control" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Posisi Awal</label>
+                          <input required type="text" name="posisi_awal" class="form-control" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Passing</label>
+                          <input required type="number" name="passing" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Servis</label>
+                          <input required type="number" name="servis" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Block</label>
+                          <input required type="number" name="block" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Smash</label>
+                          <input required type="number" name="smash" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Receive</label>
+                          <input required type="number" name="receive" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Kekuatan</label>
+                          <input required type="number" name="kekuatan" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Kelincahan</label>
+                          <input required type="number" name="kelincahan" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Daya Lentur</label>
+                          <input required type="number" name="daya_lentur" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Daya Ledak Otot</label>
+                          <input required type="number" name="daya_ledak_otot" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Daya Tahan</label>
+                          <input required type="number" name="daya_tahan" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Kecepatan</label>
+                          <input required type="number" name="kecepatan" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-xs-8">
+                          <label class="control-label">Servis</label>
+                          <input required type="number" name="servis" class="form-control nilai" value="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-8 col-lg-offset-4">
+                      <button type="reset" class="btn btn-sm btn-danger" name="reset">Reset</button>
+                      <button type="submit" class="btn btn-success" name="button">Simpan</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- disini untuk table -->
         <div class="row">
           <div class="col-lg-12">
             <div class="box box-info">
