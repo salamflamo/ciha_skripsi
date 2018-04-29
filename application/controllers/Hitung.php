@@ -474,7 +474,12 @@ class Hitung extends CI_Controller
         $this->table_besar[] = $this->createTablePreferensi();
         // $this->createTablePreferensi();
         // var_dump($this->h_kuadrat);
-        echo json_encode($this->table_besar);
+        // echo json_encode($this->table_besar);
+        $table = "";
+        foreach ($this->table_besar as $key => $value) {
+          $table .= $value;
+        }
+        echo json_encode($table);
     }
 
 }
