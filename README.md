@@ -5,3 +5,5 @@
 ## Silahkan dicoba
 
 ### Aplikasi ini menggunakan algoritma TOPSIS untuk memberikan perhitungan pengambilan keputusan pada penentuan posisi pemain bola voli
+
+### Input <= 5 && > 0 
