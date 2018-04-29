@@ -34,9 +34,10 @@ function refresh_table(flag_untuk) {
     url : '/hitung/main/'+flag_untuk,
     dataType:'json',
     success:function (r) {
-      $.each(r,function (i,v) {
-        $('#isi_table').append(v);
-      });
+      // $.each(r,function (i,v) {
+      //   $('#isi_table').append(v);
+      // });
+      $('#isi_table').html(r);
     }
   });
 }
