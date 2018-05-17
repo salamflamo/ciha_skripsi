@@ -216,12 +216,12 @@ desired effect
                           <input required type="text" name="nama" class="form-control" value="">
                         </div>
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <div class="col-xs-8">
                           <label class="control-label">Posisi Awal</label>
                           <input required type="text" name="posisi_awal" class="form-control" value="">
                         </div>
-                      </div>
+                      </div> -->
                       <div class="form-group">
                         <div class="col-xs-8">
                           <label class="control-label">Passing</label>

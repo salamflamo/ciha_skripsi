@@ -38,6 +38,9 @@ function refresh_table(flag_untuk) {
       //   $('#isi_table').append(v);
       // });
       $('#isi_table').html(r);
+    },
+    error:function (e) {
+      $('#isi_table').html("");
     }
   });
 }
@@ -45,4 +48,7 @@ function refresh_table(flag_untuk) {
 $(function () {
   var flag = $('select[name=flag_untuk]').val();
   refresh_table(flag);
+  $('select[name=flag_untuk]').on('change',function () {
+    refresh_table($(this).val());
+  });
 });

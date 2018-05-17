@@ -21,7 +21,7 @@ class Main extends CI_Controller
   {
       $data = [
         'nama' => $this->input->post('nama'),
-        'posisi_awal' => $this->input->post('posisi_awal'),
+        // 'posisi_awal' => $this->input->post('posisi_awal'),
         'passing' => $this->input->post('passing'),
         'servis' => $this->input->post('servis'),
         'block' => $this->input->post('block'),

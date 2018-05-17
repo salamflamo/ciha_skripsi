@@ -11,7 +11,7 @@ class Hitung extends CI_Controller
         $this->load->database();
     }
 
-    var $target = [
+    private $target = [
       'passing' => 1,
       'servis' => 1,
       'block' => 1,
@@ -25,7 +25,7 @@ class Hitung extends CI_Controller
       'kecepatan' => 1,
     ];
 
-    var $matriks = [
+    private $matriks = [
       [
         'nama' => 'Name',
         'passing' => 1,
@@ -42,29 +42,33 @@ class Hitung extends CI_Controller
       ],
     ];
 
-    var $h_kuadrat = [];
-    var $jum_kuadrat = [];
-    var $a_kuadrat = [];
-    var $h_normalisasi = [];
-    var $m_keputusan = [];
-    var $k_positif = [];
-    var $k_negatif = [];
-    var $d_value =[];
-    var $sum_d = [];
-    var $sqrt_d = [];
-    var $d_value_n =[];
-    var $sum_d_n = [];
-    var $sqrt_d_n = [];
-    var $preferensi = [];
+    private $h_kuadrat = [];
+    private $jum_kuadrat = [];
+    private $a_kuadrat = [];
+    private $h_normalisasi = [];
+    private $m_keputusan = [];
+    private $k_positif = [];
+    private $k_negatif = [];
+    private $d_value =[];
+    private $sum_d = [];
+    private $sqrt_d = [];
+    private $d_value_n =[];
+    private $sum_d_n = [];
+    private $sqrt_d_n = [];
+    private $preferensi = [];
 
-    var $table_besar = [];
+    private $table_besar = [];
+    private $flag_untuk = null;
 
     private function setVariable($flag)
     {
-        $data = $this->db->query("SELECT nama,passing,servis,block,smash,receive,kekuatan,
-          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM tb_nilai")->result_array();
+        $this->matriks = [];
+        $this->target = [];
+        $this->flag_untuk = $flag;
+        $data = $this->db->query("SELECT id,nama,passing,servis,block,smash,receive,kekuatan,
+          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM tb_nilai WHERE flag_untuk=$flag")->result_array();
         $this->matriks = (!empty($data)) ? $data : [];
-        $target = $this->db->query("SELECT passing,servis,block,smash,receive,kekuatan,
+        $target = $this->db->query("SELECT id,passing,servis,block,smash,receive,kekuatan,
           kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM ms_target WHERE flag_untuk=$flag")->row_array();
         $this->target = (!empty($target)) ? $target : [];
         // print_r($this->target);
@@ -74,6 +78,8 @@ class Hitung extends CI_Controller
         for ($i=0; $i < count($this->matriks); $i++) {
           foreach ($this->matriks[$i] as $key => $value) {
             if ($key == 'nama') {
+              $hasil[$key] = $value;
+            } elseif ($key == 'id') {
               $hasil[$key] = $value;
             } else {
               $hasil[$key] = pow($value,2);
@@ -90,6 +96,8 @@ class Hitung extends CI_Controller
         foreach ($this->h_kuadrat[0] as $key => $value) {
           if ($key == 'nama') {
             continue;
+          } elseif ($key == 'id') {
+            $hasil[$key] = $value;
           } else {
             $arr_name[] = $key;
           }
@@ -112,6 +120,8 @@ class Hitung extends CI_Controller
         foreach ($this->matriks[$i] as $key => $value) {
           if ($key == 'nama') {
             $hasil[$key] = $value;
+          } elseif ($key == 'id') {
+            $hasil[$key] = $value;
           } else {
             $hasil[$key] = $value/$this->a_kuadrat[$key];
           }
@@ -126,6 +136,8 @@ class Hitung extends CI_Controller
       for ($i=0; $i < count($this->h_normalisasi); $i++) {
         foreach ($this->h_normalisasi[$i] as $key => $value) {
           if ($key == 'nama') {
+            $hasil[$key] = $value;
+          } elseif ($key == 'id') {
             $hasil[$key] = $value;
           } else {
             $hasil[$key] = $value*$this->target[$key];
@@ -142,6 +154,8 @@ class Hitung extends CI_Controller
         foreach ($this->m_keputusan[0] as $key => $value) {
           if ($key == 'nama') {
             continue;
+          }  elseif ($key == 'id') {
+            $hasil[$key] = $value;
           } else {
             $arr_name[] = $key;
           }
@@ -166,6 +180,8 @@ class Hitung extends CI_Controller
         foreach ($this->m_keputusan[$i] as $key => $value) {
           if ($key == 'nama') {
             $arr[$key] = $value;
+          }  elseif ($key == 'id') {
+            $arr[$key] = $value;
           } else {
             $hasil = $this->k_positif[$key] - $value;
             $arr[$key] = pow($hasil,2);
@@ -182,6 +198,8 @@ class Hitung extends CI_Controller
         $arr = [];
         foreach ($this->m_keputusan[$i] as $key => $value) {
           if ($key == 'nama') {
+            $arr[$key] = $value;
+          }  elseif ($key == 'id') {
             $arr[$key] = $value;
           } else {
             $hasil = $this->k_negatif[$key] - $value;
@@ -201,6 +219,8 @@ class Hitung extends CI_Controller
         $hasil = 0;
         foreach ($this->d_value[$i] as $key => $value) {
           if ($key == 'nama') {
+            continue;
+          }  elseif ($key == 'id') {
             continue;
           } else {
             $hasil += $value;
@@ -224,6 +244,8 @@ class Hitung extends CI_Controller
         foreach ($this->d_value_n[$i] as $key => $value) {
           if ($key == 'nama') {
             continue;
+          } elseif ($key == 'id') {
+            continue;
           } else {
             $hasil += $value;
           }
@@ -237,13 +259,20 @@ class Hitung extends CI_Controller
       // print_r($this->sum_d_n);
       // print_r($this->sqrt_d_n);
     }
-    public function hitungPrefrensi()
+    private function hitungPrefrensi()
     {
         for ($i=0; $i < count($this->sqrt_d_n); $i++) {
           $this->preferensi[] = $this->sqrt_d_n[$i] / ($this->sqrt_d_n[$i]+$this->sqrt_d[$i]);
         }
         // echo "Langkah 9<br><br>";
         // print_r($this->preferensi);
+        $this->simpanPrefrensi();
+    }
+    private function simpanPrefrensi()
+    {
+      for ($i=0; $i < count($this->d_value); $i++) {
+        $this->simpan($this->preferensi[$i],$this->d_value[$i]['id']);
+      }
     }
 
 
@@ -266,13 +295,16 @@ class Hitung extends CI_Controller
       //   $this->db->insert('tb_prefrensi',['hasil_pref'=>$this->preferensi[$i],'flag_untuk'=>$flag]);
       // }
     }
-    public function createTableMatriks()
+    private function createTableMatriks()
     {
         // $this->call();
-        $table = "<h3>Langkah 1</h3>";
+        $table = "<h3>Tabel Matriks</h3>";
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->matriks[0] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$key."</td>";
         }
         $table .= "</thead>";
@@ -280,6 +312,9 @@ class Hitung extends CI_Controller
         for ($i=0; $i < count($this->matriks); $i++) {
           $table .= "<tr>";
           foreach ($this->matriks[$i] as $key => $value) {
+            if ($key=='id') {
+              continue;
+            }
             $table .= "<td>".$value."</td>";
           }
           $table .= "</tr>";
@@ -294,6 +329,9 @@ class Hitung extends CI_Controller
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->h_kuadrat[0] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$key."</td>";
         }
         $table .= "</thead>";
@@ -301,6 +339,9 @@ class Hitung extends CI_Controller
         for ($i=0; $i < count($this->h_kuadrat); $i++) {
           $table .= "<tr>";
           foreach ($this->h_kuadrat[$i] as $key => $value) {
+            if ($key=='id') {
+              continue;
+            }
             $table .= "<td>".$value."</td>";
           }
           $table .= "</tr>";
@@ -320,6 +361,9 @@ class Hitung extends CI_Controller
         $table .= "<td>Akar</td>";
         $table .= "</thead>";
         foreach ($this->jum_kuadrat as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<tr>";
           $table .= "<td>".$key."</td>";
           $table .= "<td>".$value."</td>";
@@ -336,6 +380,9 @@ class Hitung extends CI_Controller
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->h_normalisasi[0] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$key."</td>";
         }
         $table .= "</thead>";
@@ -343,6 +390,9 @@ class Hitung extends CI_Controller
         for ($i=0; $i < count($this->h_kuadrat); $i++) {
           $table .= "<tr>";
           foreach ($this->h_normalisasi[$i] as $key => $value) {
+            if ($key=='id') {
+              continue;
+            }
             $table .= "<td>".$value."</td>";
           }
           $table .= "</tr>";
@@ -358,6 +408,9 @@ class Hitung extends CI_Controller
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->m_keputusan[0] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$key."</td>";
         }
         $table .= "</thead>";
@@ -365,6 +418,9 @@ class Hitung extends CI_Controller
         for ($i=0; $i < count($this->m_keputusan); $i++) {
           $table .= "<tr>";
           foreach ($this->m_keputusan[$i] as $key => $value) {
+            if ($key=='id') {
+              continue;
+            }
             $table .= "<td>".$value."</td>";
           }
           $table .= "</tr>";
@@ -381,16 +437,25 @@ class Hitung extends CI_Controller
         $table .= "<thead>";
         $table .= "<td>nama</td>";
         foreach ($this->k_positif as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$key."</td>";
         }
         $table .= "</thead>";
         $table .= "<tbody>";
         $table .= "<tr><td>Y+</td>";
         foreach ($this->k_positif as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$value."</td>";
         }
         $table .= "</tr><tr><td>Y-</td>";
         foreach ($this->k_negatif as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$value."</td>";
         }
         $table .= "</tr></tbody></table>";
@@ -404,6 +469,9 @@ class Hitung extends CI_Controller
       $table .= "<table class='table table-stripped table-hover'>";
       $table .= "<thead>";
       foreach ($this->d_value[0] as $key => $value) {
+        if ($key=='id') {
+          continue;
+        }
         $table .= "<td>".$key."</td>";
       }
       $table .= "<td>D</td>";
@@ -414,6 +482,9 @@ class Hitung extends CI_Controller
       for ($i=0; $i < count($this->d_value); $i++) {
         $table .= "<tr>";
         foreach ($this->d_value[$i] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$value."</td>";
         }
         $table .= "<td>D+</td>";
@@ -424,6 +495,9 @@ class Hitung extends CI_Controller
       for ($i=0; $i < count($this->d_value_n); $i++) {
         $table .= "<tr>";
         foreach ($this->d_value_n[$i] as $key => $value) {
+          if ($key=='id') {
+            continue;
+          }
           $table .= "<td>".$value."</td>";
         }
         $table .= "<td>D-</td>";
@@ -441,14 +515,20 @@ class Hitung extends CI_Controller
 
     private function createTablePreferensi()
     {
+        $pref = $this->db->query("SELECT nama, hasil_pref FROM tb_prefrensi p
+          JOIN tb_nilai n ON p.id_nilai = n.id
+          WHERE p.flag_untuk = n.flag_untuk AND p.flag_untuk = $this->flag_untuk
+          ORDER BY hasil_pref DESC")->result();
         $table = "<h3>Table Prefrensi</h3>";
         $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead><td>Nama</td><td>Prefrensi</td>";
+        $table .= "<thead><td>Ranking</td><td>Nama</td><td>Prefrensi</td>";
         $table .= "<tbody>";
-        for ($i=0; $i < count($this->d_value); $i++) {
+        $i = 1;
+        foreach ($pref as $v) {
           $table .= "<tr>";
-          $table .= "<td>".$this->d_value[$i]['nama']."</td>";
-          $table .= "<td>".$this->preferensi[$i]."</td>";
+          $table .= "<td>".$i++."</td>";
+          $table .= "<td>".$v->nama."</td>";
+          $table .= "<td>".$v->hasil_pref."</td>";
           $table .= "</tr>";
         }
         $table .= "</tbody></table>";
@@ -465,12 +545,12 @@ class Hitung extends CI_Controller
         $this->call($flag);
         // NOTE: untuk menampilkan data
         $this->table_besar[] = $this->createTableMatriks();
-        $this->table_besar[] = $this->createTableKuadrat();
-        $this->table_besar[] = $this->createTableAkar();
-        $this->table_besar[] = $this->createTableNormalisasi();
-        $this->table_besar[] = $this->createTableKeputusan();
-        $this->table_besar[] = $this->createTableSolusiIdeal();
-        $this->table_besar[] = $this->createTableDvalue();
+        // $this->table_besar[] = $this->createTableKuadrat();
+        // $this->table_besar[] = $this->createTableAkar();
+        // $this->table_besar[] = $this->createTableNormalisasi();
+        // $this->table_besar[] = $this->createTableKeputusan();
+        // $this->table_besar[] = $this->createTableSolusiIdeal();
+        // $this->table_besar[] = $this->createTableDvalue();
         $this->table_besar[] = $this->createTablePreferensi();
         // $this->createTablePreferensi();
         // var_dump($this->h_kuadrat);
@@ -480,6 +560,18 @@ class Hitung extends CI_Controller
           $table .= $value;
         }
         echo json_encode($table);
+    }
+
+    private function simpan($n_pref='',$id_nilai='')
+    {
+        $this->db->where(['id_nilai'=>$id_nilai,'flag_untuk'=>$this->flag_untuk]);
+        $cek = $this->db->get('tb_prefrensi')->row();
+        if (empty($cek)) {
+          $this->db->insert('tb_prefrensi',['hasil_pref'=>$n_pref,'flag_untuk'=>$this->flag_untuk,'id_nilai'=>$id_nilai]);
+        } else {
+          $this->db->where(['id_nilai'=>$id_nilai,'flag_untuk'=>$this->flag_untuk]);
+          $this->db->update('tb_prefrensi',['hasil_pref'=>$n_pref]);
+        }
     }
 
 }
