@@ -125,6 +125,19 @@ class Main extends CI_Controller
     }
   }
 
+  public function penilaian_delete($id='')
+  {
+      $this->Auth_model->is_login();
+      if ($id=='') {
+        http_response_code(500);exit;
+      }
+      $this->db->where('id',$id);
+      $this->db->delete('tb_nilai');
+
+      $this->db->where('id_nilai',$id);
+      $this->db->delete('tb_prefrensi');
+  }
+
   private function update($tb,$where,$data)
   {
     $this->db->where($where);

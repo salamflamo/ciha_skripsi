@@ -110,6 +110,23 @@ function refresh_table(flag_untuk) {
   });
 }
 
+function hapus(id) {
+  var konfir = confirm("Konfirmasi hapus");
+  if (konfir) {
+    $.ajax({
+      url:'/main/penilaian_delete/'+id,
+      success:function (r) {
+        alert("Berhasil hapus");
+        var flag = $('select[name=flag_untuk]').val();
+        refresh_table(flag);
+      },
+      error:function (e) {
+
+      }
+    });
+  }
+}
+
 $(function () {
   var flag = $('select[name=flag_untuk]').val();
   refresh_table(flag);

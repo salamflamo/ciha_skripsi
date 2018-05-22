@@ -308,23 +308,27 @@ class Hitung extends CI_Controller
           }
           $table .= "<th>".$key."</th>";
         }
+        $table .= "<th>##</th>";
         $table .= "</thead>";
         $table .= "<tbody>";
         for ($i=0; $i < count($this->matriks); $i++) {
           $table .= "<tr>";
+          $id = null;
           foreach ($this->matriks[$i] as $key => $value) {
             if ($key=='id') {
-              continue;
-            }
-            if ($key=='nama') {
-              $width = '120px';
-              $class = '';
+              $id = $value;
             } else {
-              $width = '35px';
-              $class = 'penilaian';
+              if ($key=='nama') {
+                $width = '120px';
+                $class = '';
+              } else {
+                $width = '35px';
+                $class = 'penilaian';
+              }
+              $table .= "<td><input required class='form-control $class' style='height: 27px;width:$width' name='penilaian[$i][$key]' value='$value'</td>";
             }
-            $table .= "<td><input required class='form-control $class' style='height: 27px;width:$width' name='penilaian[$i][$key]' value='$value'</td>";
           }
+          $table .= "<td><button type='button' onclick='hapus($id)' class='btn btn-xs btn-danger'>Hapus</button></td>";
           $table .= "</tr>";
         }
         $table .= "</tbody>";
