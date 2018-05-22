@@ -1,10 +1,36 @@
 var form = $('form[name=form_nilai]');
+var form_target = $('form#target_form');
+var penilaian_form = $('form#penilaian_form');
+var nilai_asli = null;
 
 $('input.nilai').on('input',function () {
   var nilai = $(this).val();
-  if (parseInt(nilai) > 5 || parseInt(nilai) <= 0) {
+  if (parseInt(nilai) > 5 || parseInt(nilai) < 0) {
     alert("Tidak boleh kurang atau lebih dari 5")
     $(this).val("");
+  }
+});
+$('input.target').on('click',function () {
+  var asli = $(this).val();
+  nilai_asli = asli;
+});
+$('input.target').on('input',function () {
+  var nilai = $(this).val();
+  if (parseInt(nilai) > 5 || parseInt(nilai) < 0) {
+    alert("Tidak boleh kurang atau lebih dari 5")
+    $(this).val(nilai_asli);
+  }
+});
+
+$('div#isi_table_p').on('click','table tbody tr td input.penilaian',function () {
+  var nilai = $(this).val();
+  nilai_asli = nilai;
+});
+$('div#isi_table_p').on('input','table tbody tr td input.penilaian',function () {
+  var nilai = $(this).val();
+  if (parseInt(nilai) > 5 || parseInt(nilai) < 0) {
+    alert("Tidak boleh kurang atau lebih dari 5")
+    $(this).val(nilai_asli);
   }
 });
 
@@ -29,6 +55,44 @@ form.submit(function (e) {
   });
 });
 
+form_target.submit(function (e) {
+  e.preventDefault();
+  var data = $(this).serialize();
+  var url = $(this).attr('action');
+  $.ajax({
+    url:url,
+    method:'post',
+    data:data,
+    success:function (r) {
+      alert("Berhasil update");
+      var flag = $('select[name=flag_untuk]').val();
+      refresh_table(flag);
+    },
+    error:function (e) {
+      alert("Gagal update");
+    }
+  });
+});
+
+penilaian_form.submit(function (e) {
+  e.preventDefault();
+  var data = $(this).serialize();
+  var url = $(this).attr('action');
+  $.ajax({
+    url:url,
+    method:'post',
+    data:data,
+    success:function (r) {
+      alert("Berhasil update");
+      var flag = $('select[name=flag_untuk]').val();
+      refresh_table(flag);
+    },
+    error:function (e) {
+      alert("Gagal update");
+    }
+  });
+});
+
 function refresh_table(flag_untuk) {
   $.ajax({
     url : '/hitung/main/'+flag_untuk,
@@ -37,7 +101,8 @@ function refresh_table(flag_untuk) {
       // $.each(r,function (i,v) {
       //   $('#isi_table').append(v);
       // });
-      $('#isi_table').html(r);
+      $('#isi_table').html(r.prefrensi);
+      $('#isi_table_p').html(r.penilaian);
     },
     error:function (e) {
       $('#isi_table').html("");

@@ -9,6 +9,7 @@ class Hitung extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
+        $this->load->model('Auth_model');
     }
 
     private $target = [
@@ -66,7 +67,7 @@ class Hitung extends CI_Controller
         $this->target = [];
         $this->flag_untuk = $flag;
         $data = $this->db->query("SELECT id,nama,passing,servis,block,smash,receive,kekuatan,
-          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM tb_nilai WHERE flag_untuk=$flag")->result_array();
+          kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM tb_nilai ")->result_array();
         $this->matriks = (!empty($data)) ? $data : [];
         $target = $this->db->query("SELECT id,passing,servis,block,smash,receive,kekuatan,
           kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM ms_target WHERE flag_untuk=$flag")->row_array();
@@ -298,14 +299,14 @@ class Hitung extends CI_Controller
     private function createTableMatriks()
     {
         // $this->call();
-        $table = "<h3>Tabel Matriks</h3>";
+        $table = "<h4>Tabel Penilaian</h4>";
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead>";
         foreach ($this->matriks[0] as $key => $value) {
           if ($key=='id') {
             continue;
           }
-          $table .= "<td>".$key."</td>";
+          $table .= "<th>".$key."</th>";
         }
         $table .= "</thead>";
         $table .= "<tbody>";
@@ -315,7 +316,14 @@ class Hitung extends CI_Controller
             if ($key=='id') {
               continue;
             }
-            $table .= "<td>".$value."</td>";
+            if ($key=='nama') {
+              $width = '120px';
+              $class = '';
+            } else {
+              $width = '35px';
+              $class = 'penilaian';
+            }
+            $table .= "<td><input required class='form-control $class' style='height: 27px;width:$width' name='penilaian[$i][$key]' value='$value'</td>";
           }
           $table .= "</tr>";
         }
@@ -323,6 +331,8 @@ class Hitung extends CI_Controller
         $table .= "</table>";
         return $table;
     }
+    // NOTE: ini sudah tidak dipakai, jika dipakai hilangkan saja tanda comment
+    /*
     private function createTableKuadrat()
     {
         $table = "<h3>Langkah 2</h3>";
@@ -512,16 +522,17 @@ class Hitung extends CI_Controller
         // print_r($this->sum_d_n);
         return $table;
     }
+    */
 
     private function createTablePreferensi()
     {
         $pref = $this->db->query("SELECT nama, hasil_pref FROM tb_prefrensi p
           JOIN tb_nilai n ON p.id_nilai = n.id
-          WHERE p.flag_untuk = n.flag_untuk AND p.flag_untuk = $this->flag_untuk
+          WHERE p.flag_untuk = $this->flag_untuk
           ORDER BY hasil_pref DESC")->result();
-        $table = "<h3>Table Prefrensi</h3>";
+        $table = "<h4>Table Prefrensi</h4>";
         $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead><td>Ranking</td><td>Nama</td><td>Prefrensi</td>";
+        $table .= "<thead><th>Ranking</th><th>Nama</th><th>Prefrensi</th>";
         $table .= "<tbody>";
         $i = 1;
         foreach ($pref as $v) {
@@ -538,28 +549,29 @@ class Hitung extends CI_Controller
 
     public function main($flag='')
     {
+        $this->Auth_model->is_login();
         if (empty($flag)) {
           http_response_code(500);
           exit;
         }
         $this->call($flag);
         // NOTE: untuk menampilkan data
-        $this->table_besar[] = $this->createTableMatriks();
+        $this->table_besar['penilaian'] = $this->createTableMatriks();
         // $this->table_besar[] = $this->createTableKuadrat();
         // $this->table_besar[] = $this->createTableAkar();
         // $this->table_besar[] = $this->createTableNormalisasi();
         // $this->table_besar[] = $this->createTableKeputusan();
         // $this->table_besar[] = $this->createTableSolusiIdeal();
         // $this->table_besar[] = $this->createTableDvalue();
-        $this->table_besar[] = $this->createTablePreferensi();
+        $this->table_besar['prefrensi'] = $this->createTablePreferensi();
         // $this->createTablePreferensi();
         // var_dump($this->h_kuadrat);
         // echo json_encode($this->table_besar);
-        $table = "";
-        foreach ($this->table_besar as $key => $value) {
-          $table .= $value;
-        }
-        echo json_encode($table);
+        // $table = "";
+        // foreach ($this->table_besar as $key => $value) {
+        //   $table .= $value;
+        // }
+        echo json_encode($this->table_besar);
     }
 
     private function simpan($n_pref='',$id_nilai='')
