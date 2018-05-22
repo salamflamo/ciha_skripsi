@@ -56,7 +56,7 @@ class Auth_model extends CI_Model
         if ($data_user->session == $_SESSION['session']) {
           return true;
         } else {
-          redirect('/login');
+          redirect('/logout');
         }
       } else {
         redirect('/login');
