@@ -69,7 +69,7 @@ form_target.submit(function (e) {
       refresh_table(flag);
     },
     error:function (e) {
-      alert("Gagal update");
+      alert("Terjadi kesalahan gagal update");
     }
   });
 });
@@ -88,7 +88,7 @@ penilaian_form.submit(function (e) {
       refresh_table(flag);
     },
     error:function (e) {
-      alert("Gagal update");
+      alert("Terjadi kesalahan gagal update");
     }
   });
 });
@@ -121,7 +121,7 @@ function hapus(id) {
         refresh_table(flag);
       },
       error:function (e) {
-
+        alert("Terjadi kesalahan gagal hapus");
       }
     });
   }
