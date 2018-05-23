@@ -28,6 +28,7 @@ class Auth_model extends CI_Model
         $this->db->where(['username'=>$username,'status'=>1]);
         $hasil = $this->db->get('ms_admin')->row();
         if (empty($hasil)) {
+          $this->session->set_flashdata('gagal','Username salah');
           redirect('/login');
         } elseif ($hasil->password == $pswd) {
           // update database untuk session id
@@ -44,6 +45,7 @@ class Auth_model extends CI_Model
           $this->session->set_flashdata('modal','show');
           redirect('/');
         } else {
+          $this->session->set_flashdata('gagal','Password salah');
           redirect('/login');
         }
       }

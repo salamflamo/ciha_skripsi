@@ -12,6 +12,12 @@
               <!-- <h2 class="form-signing-heading" style="text-align:center">Log In Panel</h2> -->
               <h4 class="form-signing-heading" style="text-align:center">Sistem Rekomendasi Spesialisasi Pemain Bola Voli</h4>
               <hr>
+              <?php if (!empty($gagal)): ?>
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <?= $gagal;?>
+                </div>
+              <?php endif; ?>
               <div class="form-group">
                 <label for="username" class="sr-only">Username</label>
                 <input type="text" class="form-control" name="username" placeholder="Username" required autofocus value="">
@@ -21,7 +27,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Password" required autofocus value="">
               </div>
               <div class="form-action">
-                <button type="submit" class="btn btn-block btn-primary" name="button">Masuk</button>
+                <button type="submit" class="btn btn-block btn-primary" name="button">Sign In</button>
               </div>
             </form>
           </div>

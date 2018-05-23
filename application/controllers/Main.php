@@ -11,6 +11,7 @@ class Main extends CI_Controller
     parent::__construct();
     $this->load->database();
     $this->load->model('Auth_model');
+    $this->load->library('session');
   }
   private $sql_target = "SELECT p.nama_spesialis,t.* FROM ms_target t JOIN tb_pengukuran p ON t.flag_untuk = p.id";
   private $sql_penilaian = "SELECT id,nama,passing,servis,block,smash,receive,kekuatan,
@@ -20,7 +21,6 @@ class Main extends CI_Controller
   {
       $this->Auth_model->is_login();
       $this->load->database();
-      $this->load->library('session');
       $data['css'] = '
       <link rel="stylesheet" href="'.base_url().'assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
       ';
@@ -41,6 +41,7 @@ class Main extends CI_Controller
     if (isset($_SESSION['username']) && isset($_SESSION['session'])) {
       redirect('/');
     }
+    $data['gagal'] = $this->session->flashdata('gagal');
     $data['page'] = 'login';
     $this->load->view('starter',$data);
   }
