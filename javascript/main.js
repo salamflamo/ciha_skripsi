@@ -129,8 +129,8 @@ function refresh_table(flag_untuk) {
       }, 1000);
     },
     error:function (e) {
-      alert("Terjadi kesalahan");
-      window.location.reload();
+      alert("Terjadi kesalahan, reload halaman");
+      unblockui();
       $('#isi_table').html("");
     }
   });
