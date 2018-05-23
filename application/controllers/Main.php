@@ -20,16 +20,19 @@ class Main extends CI_Controller
   {
       $this->Auth_model->is_login();
       $this->load->database();
+      $this->load->library('session');
       $data['css'] = '
       <link rel="stylesheet" href="'.base_url().'assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
       ';
       $data['js'] = '
+      <script src="'.base_url().'assets/plugins/block-ui/jquery.blockui.min.js"></script>
       <script src="'.base_url().'javascript/main.js"></script>
       <script src="'.base_url().'assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
       ';
       $data['target'] = $this->db->query($this->sql_target)->result_array();
       $data['pengukuran'] = $this->db->get('tb_pengukuran')->result();
       $data['page'] = 'main';
+      $data['modal'] = $this->session->flashdata('modal');
       // $data['page'] = 'login';
       $this->load->view('starter',$data);
   }

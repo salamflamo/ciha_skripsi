@@ -6,9 +6,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>R</b>SP</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>Sis</b>Rekomendasi</span>
     </a>
 
     <!-- Header Navbar -->
@@ -27,14 +27,15 @@
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?= base_url();?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <!-- <img src="<?= base_url();?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
+              <img src="<?= base_url();?>assets/images/avatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?= $_SESSION['nama'];?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?= base_url();?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?= base_url();?>assets/images/avatar.png" class="img-circle" alt="User Image">
 
                 <p>
                   <?= $_SESSION['nama'];?>
@@ -64,7 +65,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?= base_url();?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?= base_url();?>assets/images/avatar.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?= $_SESSION['nama'];?></p>
@@ -142,12 +143,14 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="row">
-                    <div class="col-md-3 col-md-offset-5">
-                      <button type="button" onclick="window.location.reload()" class="btn  btn-danger" name="reset">Batal</button>
-                      <button type="submit" class="btn  btn-success" name="button">Update</button>
+                  <?php if ($_SESSION['level']==1): ?>
+                    <div class="row">
+                      <div class="col-md-3 col-md-offset-5">
+                        <button type="button" onclick="window.location.reload()" class="btn  btn-danger" name="reset">Batal</button>
+                        <button type="submit" class="btn  btn-success" name="button">Update</button>
+                      </div>
                     </div>
-                  </div>
+                  <?php endif; ?>
                 </form>
               </div>
             </div>
@@ -329,3 +332,23 @@
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+<?php if (!empty($modal)): ?>
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal_welcome">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">Modal</h3>
+        </div> -->
+        <div class="modal-body">
+          <h4>Selamat datang <b><?= $_SESSION['nama'];?></b> di web aplikasi <b>Rekomendasi Spesialisasi Pemain Bola Voli</b>.
+            <br>Selamat menggunakan aplikasi ini. Kami harap Anda menikmatinya.
+          </h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" name="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>

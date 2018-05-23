@@ -9,6 +9,7 @@
           <div class="panel-body">
             <form class="form-signing" action="<?=base_url();?>main/login_process" method="post">
               <h2 class="form-signing-heading" style="text-align:center">Log In Panel</h2>
+              <h4 class="form-signing-heading" style="text-align:center">Sistem Rekomendasi Spesialisasi Pemain Bola Voli</h4>
               <hr>
               <div class="form-group">
                 <label for="username" class="sr-only">Username</label>

@@ -2,6 +2,26 @@ var form = $('form[name=form_nilai]');
 var form_target = $('form#target_form');
 var penilaian_form = $('form#penilaian_form');
 var nilai_asli = null;
+var blockui = function () {
+  $.blockUI({
+            message: '<img src="http://rs717.pbsrc.com/albums/ww173/prestonjjrtr/Smileys/Volleyball.gif~c200" style="width:40%;height:auto"/><br><h3>Counting...</h3>',
+            overlayCSS: {
+                backgroundColor: '#eaedf2',
+                opacity: 0.5,
+                cursor: 'wait',
+            },
+            css: {
+                border: 0,
+                padding: 0,
+                margin:0,
+                backgroundColor: 'transparent',
+                top:'20%',
+            }
+        });
+}
+var unblockui = function () {
+  $.unblockUI();
+}
 
 $('input.nilai').on('input',function () {
   var nilai = $(this).val();
@@ -94,6 +114,7 @@ penilaian_form.submit(function (e) {
 });
 
 function refresh_table(flag_untuk) {
+  blockui();
   $.ajax({
     url : '/hitung/main/'+flag_untuk,
     dataType:'json',
@@ -101,8 +122,11 @@ function refresh_table(flag_untuk) {
       // $.each(r,function (i,v) {
       //   $('#isi_table').append(v);
       // });
-      $('#isi_table').html(r.prefrensi);
-      $('#isi_table_p').html(r.penilaian);
+      setTimeout(function () {
+        unblockui();
+        $('#isi_table').html(r.prefrensi);
+        $('#isi_table_p').html(r.penilaian);
+      }, 1000);
     },
     error:function (e) {
       $('#isi_table').html("");
@@ -133,4 +157,6 @@ $(function () {
   $('select[name=flag_untuk]').on('change',function () {
     refresh_table($(this).val());
   });
+  $('#modal_welcome').modal({keyboard:false,backdrop:'static'});
+  $('#modal_welcome').modal('show');
 });

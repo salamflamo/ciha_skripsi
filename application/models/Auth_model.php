@@ -41,6 +41,7 @@ class Auth_model extends CI_Model
             'level' => $hasil->level,
           ];
           $this->session->set_userdata($session);
+          $this->session->set_flashdata('modal','show');
           redirect('/');
         } else {
           redirect('/login');
