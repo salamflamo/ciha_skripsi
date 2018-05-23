@@ -129,6 +129,8 @@ function refresh_table(flag_untuk) {
       }, 1000);
     },
     error:function (e) {
+      alert("Terjadi kesalahan");
+      window.location.reload();
       $('#isi_table').html("");
     }
   });
