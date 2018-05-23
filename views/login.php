@@ -1,4 +1,4 @@
-<div style="margin-top:10%">
+<div style="margin-top:7%">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3 col-lg-offset-4">
@@ -8,7 +8,8 @@
           </div> -->
           <div class="panel-body">
             <form class="form-signing" action="<?=base_url();?>main/login_process" method="post">
-              <h2 class="form-signing-heading" style="text-align:center">Log In Panel</h2>
+              <img src="<?= base_url();?>assets/images/avatar.png" style="display: block;margin: 0 auto;width:100px;height:auto" alt="">
+              <!-- <h2 class="form-signing-heading" style="text-align:center">Log In Panel</h2> -->
               <h4 class="form-signing-heading" style="text-align:center">Sistem Rekomendasi Spesialisasi Pemain Bola Voli</h4>
               <hr>
               <div class="form-group">
