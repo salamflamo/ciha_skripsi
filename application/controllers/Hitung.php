@@ -72,10 +72,11 @@ class Hitung extends CI_Controller
         $target = $this->db->query("SELECT id,passing,servis,block,smash,receive,kekuatan,
           kelincahan,daya_lentur,daya_ledak_otot,daya_tahan,kecepatan FROM ms_target WHERE flag_untuk=$flag")->row_array();
         $this->target = (!empty($target)) ? $target : [];
-        // print_r($this->target);
+        // print_r($this->matriks);
     }
     private function kuadrat()
     {
+        // echo "Langkah 1 kuadrat";
         for ($i=0; $i < count($this->matriks); $i++) {
           foreach ($this->matriks[$i] as $key => $value) {
             if ($key == 'nama') {
@@ -93,6 +94,8 @@ class Hitung extends CI_Controller
     }
     private function akarKuadrat()
     {
+        // echo "<br>";
+        // echo "Langkah 1 kuadrat";
         $arr_name = [];
         foreach ($this->h_kuadrat[0] as $key => $value) {
           if ($key == 'nama') {
@@ -117,6 +120,8 @@ class Hitung extends CI_Controller
     }
     private function normalisasi()
     {
+      // echo "<br>";
+      // echo "Langkah 2 normalisasi";
       for ($i=0; $i < count($this->matriks); $i++) {
         foreach ($this->matriks[$i] as $key => $value) {
           if ($key == 'nama') {
@@ -134,6 +139,8 @@ class Hitung extends CI_Controller
     }
     private function keputusan()
     {
+      // echo "<br>";
+      // echo "Langkah 3 matriks keputusan";
       for ($i=0; $i < count($this->h_normalisasi); $i++) {
         foreach ($this->h_normalisasi[$i] as $key => $value) {
           if ($key == 'nama') {
@@ -151,6 +158,8 @@ class Hitung extends CI_Controller
     }
     private function solusiIdealPlusMinus()
     {
+        // echo "<br>";
+        // echo "Langkah 4 Solusi ideal";
         $arr_name = [];
         foreach ($this->m_keputusan[0] as $key => $value) {
           if ($key == 'nama') {
@@ -171,11 +180,17 @@ class Hitung extends CI_Controller
           $this->k_negatif[$arr_name[$j]] = min($arr);
         }
         // echo "Langkah 4<br><br>";
+        // echo "<br>";
+        // echo "Positif";
         // print_r($this->k_positif);
+        // echo "<br>";
+        // echo "Negatif";
         // print_r($this->k_negatif);
     }
     private function hitungDValue()
     {
+      // echo "<br>";
+      // echo "Langkah 5 Jarak antara D+";
       for ($i=0; $i < count($this->m_keputusan); $i++) {
         $arr = [];
         foreach ($this->m_keputusan[$i] as $key => $value) {
@@ -195,6 +210,7 @@ class Hitung extends CI_Controller
     }
     private function hitungDValueNegatif()
     {
+      // echo "Langkah 5 Jarak antara D-";
       for ($i=0; $i < count($this->m_keputusan); $i++) {
         $arr = [];
         foreach ($this->m_keputusan[$i] as $key => $value) {
@@ -214,6 +230,8 @@ class Hitung extends CI_Controller
     }
     private function sumSqrtD()
     {
+      // echo "<br>";
+      // echo "Sum dan sqrt D+ ";
       $arr = [];
       $array = [];
       for ($i=0; $i < count($this->d_value); $i++) {
@@ -238,6 +256,8 @@ class Hitung extends CI_Controller
     }
     private function sumSqrtDNegatif()
     {
+      // echo "<br>";
+      // echo "Sum dan sqrt D- ";
       $arr = [];
       $array = [];
       for ($i=0; $i < count($this->d_value_n); $i++) {
@@ -262,6 +282,8 @@ class Hitung extends CI_Controller
     }
     private function hitungPrefrensi()
     {
+        // echo "<br>";
+        // echo "Hasil preferensi";
         for ($i=0; $i < count($this->sqrt_d_n); $i++) {
           $this->preferensi[] = $this->sqrt_d_n[$i] / ($this->sqrt_d_n[$i]+$this->sqrt_d[$i]);
         }
