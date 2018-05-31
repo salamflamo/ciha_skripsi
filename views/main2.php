@@ -91,12 +91,12 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         Main Menu
         <small>Perhitungan rekomendasi</small>
       </h1>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content container-fluid">
@@ -282,7 +282,7 @@
                 <div class="col-lg-12">
                   <div class="box box-info">
                     <div class="box-header with-border">
-                      <h3>Tabel Utama</h3>
+                      <!-- <h3>Tabel Utama</h3> -->
                     </div>
                     <div class="box-body">
                       <div class="row">
