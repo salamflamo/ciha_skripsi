@@ -219,7 +219,7 @@ class Hitung extends CI_Controller
           }  elseif ($key == 'id') {
             $arr[$key] = $value;
           } else {
-            $hasil = $this->k_negatif[$key] - $value;
+            $hasil = $value - $this->k_negatif[$key];
             $arr[$key] = pow($hasil,2);
           }
         }

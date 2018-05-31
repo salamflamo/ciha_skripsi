@@ -31,7 +31,7 @@ class Main extends CI_Controller
       ';
       $data['target'] = $this->db->query($this->sql_target)->result_array();
       $data['pengukuran'] = $this->db->get('tb_pengukuran')->result();
-      $data['page'] = 'main';
+      $data['page'] = 'main2';
       $data['modal'] = $this->session->flashdata('modal');
       // $data['page'] = 'login';
       $this->load->view('starter',$data);
