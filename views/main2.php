@@ -106,9 +106,9 @@
         -------------------------->
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li class="active"> <a href="#target" data-toggle="tab">Nilai Standar</a> </li>
-            <li> <a href="#form" data-toggle="tab">Form Pemain</a> </li>
-            <li> <a href="#table" data-toggle="tab">Tabel Hasil</a> </li>
+            <li id="c_target" class="active"> <a href="#target" data-toggle="tab">Nilai Standar</a> </li>
+            <li id="c_form"> <a href="#form" data-toggle="tab">Form Pemain</a> </li>
+            <li id="c_table"> <a href="#table" id="klik" data-toggle="tab">Tabel Hasil</a> </li>
           </ul>
           <div class="tab-content">
             <div class="active tab-pane" id="target">
@@ -178,13 +178,18 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <div class="col-xs-8">
-                                <h4>Teknik Dasar</h4>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-xs-8">
                                 <label class="control-label">Nama</label>
                                 <input required type="text" name="nama" class="form-control" value="">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="col-xs-8">
+                                <h4>Teknik Dasar</h4>
                               </div>
                             </div>
                             <h3></h3>

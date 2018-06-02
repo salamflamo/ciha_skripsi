@@ -556,7 +556,7 @@ class Hitung extends CI_Controller
           JOIN tb_nilai n ON p.id_nilai = n.id
           WHERE p.flag_untuk = $this->flag_untuk
           ORDER BY hasil_pref DESC")->result();
-        $table = "<h4>Table Preferensi</h4>";
+        $table = "<h4>Tabel Preferensi dan Hasil Perankingan</h4>";
         $table .= "<table class='table table-stripped table-hover'>";
         $table .= "<thead><th>Ranking</th><th>Nama</th><th>Preferensi</th>";
         $table .= "<tbody>";

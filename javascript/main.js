@@ -126,6 +126,7 @@ function refresh_table(flag_untuk) {
         unblockui();
         $('#isi_table').html(r.prefrensi);
         $('#isi_table_p').html(r.penilaian);
+        $('#klik').trigger('click');
       }, 1000);
     },
     error:function (e) {
