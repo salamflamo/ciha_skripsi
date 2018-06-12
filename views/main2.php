@@ -45,7 +45,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="<?= base_url();?>logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?= base_url();?>logout" class="btn btn-default btn-flat">Log out</a>
                 </div>
               </li>
             </ul>

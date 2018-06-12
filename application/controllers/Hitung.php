@@ -560,14 +560,15 @@ class Hitung extends CI_Controller
           ORDER BY hasil_pref DESC")->result();
         $table = "<h4>Tabel Preferensi dan Hasil Perankingan</h4>";
         $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead><th>Ranking</th><th>Nama</th><th>Preferensi</th>";
+        $table .= "<thead><th>Ranking</th><th>Nama</th><th>Preferensi</th><th>###</th>";
         $table .= "<tbody>";
         $i = 1;
         foreach ($pref as $v) {
           $table .= "<tr>";
           $table .= "<td>".$i++."</td>";
-          $table .= "<td>".$v->nama." &nbsp;&nbsp;<button onclick='detail(".$v->id.",\"detail\")' class='btn btn-sm btn-default'>Detail</button></td>";
+          $table .= "<td>".$v->nama."</td>";
           $table .= "<td>".$v->hasil_pref."</td>";
+          $table .= "<td><button onclick='detail(".$v->id.",\"detail\")' class='btn btn-sm btn-default'>Detail</button></td>";
           $table .= "</tr>";
         }
         $table .= "</tbody></table>";

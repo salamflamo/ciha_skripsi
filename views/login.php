@@ -27,7 +27,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Password" required autofocus value="">
               </div>
               <div class="form-action">
-                <button type="submit" class="btn btn-block btn-primary" name="button">Sign In</button>
+                <button type="submit" class="btn btn-block btn-primary" name="button">Log In</button>
               </div>
             </form>
           </div>
