@@ -182,6 +182,28 @@
                                 <input required type="text" name="nama" class="form-control" value="">
                               </div>
                             </div>
+                            <div class="form-group">
+                              <div class="col-xs-8">
+                                <label class="control-label">Tinggi Badan</label>
+                                <input required type="number" name="tinggi_bdn" class="form-control" value="">
+                                <small class="help-block">*Dalam centimeter</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="col-xs-8">
+                                <label class="control-label">Lahir</label>
+                                <input required type="date" name="lahir" class="form-control" value="">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="col-xs-8">
+                                <label class="control-label">Berat Badan</label>
+                                <input required type="number" name="berat_bdn" class="form-control" value="">
+                                <small class="help-block">*Dalam kilogram</small>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <hr>
@@ -271,8 +293,8 @@
                         <br>
                         <div class="row">
                           <div class="col-lg-8 col-lg-offset-4">
-                            <button type="reset" class="btn btn-sm btn-danger" name="reset">Reset</button>
                             <button type="submit" class="btn btn-success" name="button">Simpan</button>
+                            <button type="reset" class="btn btn-sm btn-danger" name="reset">Reset</button>
                           </div>
                         </div>
                       </div>
@@ -372,3 +394,63 @@
     </div>
   </div>
 <?php endif; ?>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_detail_pemain">
+  <div class="modal-dialog " style="width:400px">
+    <form class="" action="<?= base_url()?>main/update_info/" data-id="" id="form_update_info" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">Detail Pemain</h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="nama">Nama</label>
+                <input required type="text" id="update_nama" class="form-control" name="nama" value="">
+              </div>
+              <div class="form-group">
+                <label for="lahir">Lahir</label>
+                <input required type="date" name="lahir" id="update_lahir" class="form-control" value="">
+              </div>
+              <div class="form-group">
+                <label for="umur">Umur</label>
+                <input readonly type="number" id="update_umur" class="form-control" name="" value="">
+              </div>
+              <div class="form-group">
+                <label for="tinggi_bdn">Tinggi Badan</label>
+                <input required type="number" id="update_tinggi_bdn" class="form-control" name="tinggi_bdn" value="">
+              </div>
+              <div class="form-group">
+                <label for="berat_bdn">Berat Badan</label>
+                <input required type="number" id="update_berat_bdn" class="form-control" name="berat_bdn" value="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" name="button">Simpan</button>
+          <button type="reset" class="btn btn-danger" data-dismiss="modal" name="reset_form_update">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_detail_pemain_2">
+  <div class="modal-dialog " style="width:400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Detail Pemain</h3>
+      </div>
+      <div class="modal-body">
+        <p id="text_detail_pemain"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" name="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

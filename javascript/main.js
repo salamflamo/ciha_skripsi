@@ -1,7 +1,9 @@
 var form = $('form[name=form_nilai]');
 var form_target = $('form#target_form');
 var penilaian_form = $('form#penilaian_form');
+var form_update_info = $('form#form_update_info');
 var nilai_asli = null;
+var base_url = $('link#base_url').attr('href');
 var blockui = function () {
   $.blockUI({
             message: '<img src="http://rs717.pbsrc.com/albums/ww173/prestonjjrtr/Smileys/Volleyball.gif~c200" style="width:40%;height:auto"/><br><h3>Counting...</h3>',
@@ -113,10 +115,30 @@ penilaian_form.submit(function (e) {
   });
 });
 
+form_update_info.submit(function (e) {
+  e.preventDefault();
+  var url = $(this).attr('action')+$(this).attr('data-id');
+  var data = $(this).serialize();
+  $.ajax({
+    url:url,
+    data:data,
+    method:'post',
+    success:function (r) {
+      if (r) {
+        alert("Berhasil update");
+        $('button[name=reset_form_update]').trigger('click');
+      }
+    },
+    error:function (e) {
+      alert("Error "+e);
+    }
+  });
+});
+
 function refresh_table(flag_untuk) {
   blockui();
   $.ajax({
-    url : '/hitung/main/'+flag_untuk,
+    url : base_url+'hitung/main/'+flag_untuk,
     dataType:'json',
     success:function (r) {
       // $.each(r,function (i,v) {
@@ -141,7 +163,7 @@ function hapus(id) {
   var konfir = confirm("Konfirmasi hapus");
   if (konfir) {
     $.ajax({
-      url:'/main/penilaian_delete/'+id,
+      url:base_url+'main/penilaian_delete/'+id,
       success:function (r) {
         alert("Berhasil hapus");
         var flag = $('select[name=flag_untuk]').val();
@@ -152,6 +174,31 @@ function hapus(id) {
       }
     });
   }
+}
+
+function detail(id,dari) {
+  $.ajax({
+    url:base_url+'main/detail_pemain/'+id,
+    dataType:'json',
+    success:function (r) {
+      var text = 'Pemain <strong>'+r.nama+'</strong>, umur <strong>'+r.umur+'</strong>, tinggi badan <strong>'+r.tinggi_bdn+'</strong> dan berat badan <strong>'+r.berat_bdn+'</strong>.';
+      $('#text_detail_pemain').html(text);
+      $('#form_update_info').attr('data-id',id);
+      $('#update_nama').val(r.nama);
+      $('#update_umur').val(r.umur);
+      $('#update_lahir').val(r.lahir);
+      $('#update_tinggi_bdn').val(r.tinggi_bdn);
+      $('#update_berat_bdn').val(r.berat_bdn);
+      if (dari=='update') {
+        $('#modal_detail_pemain').modal('show');
+      } else if (dari=='detail') {
+        $('#modal_detail_pemain_2').modal('show');
+      }
+    },
+    error:function (e) {
+
+    }
+  });
 }
 
 $(function () {

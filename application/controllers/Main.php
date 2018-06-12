@@ -12,6 +12,7 @@ class Main extends CI_Controller
     $this->load->database();
     $this->load->model('Auth_model');
     $this->load->library('session');
+    $this->load->helper('converting');
   }
   private $sql_target = "SELECT p.nama_spesialis,t.* FROM ms_target t JOIN tb_pengukuran p ON t.flag_untuk = p.id";
   private $sql_penilaian = "SELECT id,nama,passing,servis,block,smash,receive,kekuatan,
@@ -51,6 +52,9 @@ class Main extends CI_Controller
       $this->Auth_model->is_login();
       $data = [
         'nama' => strtoupper($this->input->post('nama')),
+        'lahir' => tgl_db($this->input->post('lahir')),
+        'tinggi_bdn' => $this->input->post('tinggi_bdn'),
+        'berat_bdn' => $this->input->post('berat_bdn'),
         // 'posisi_awal' => $this->input->post('posisi_awal'),
         'passing' => $this->input->post('passing'),
         'servis' => $this->input->post('servis'),
@@ -72,6 +76,20 @@ class Main extends CI_Controller
       } else {
         echo 0;
       }
+  }
+
+  public function update_info($id='')
+  {
+    $this->Auth_model->is_login();
+    $data = [
+      'nama' => strtoupper($this->input->post('nama')),
+      'lahir' => tgl_db($this->input->post('lahir')),
+      'tinggi_bdn' => $this->input->post('tinggi_bdn'),
+      'berat_bdn' => $this->input->post('berat_bdn'),
+    ];
+    $this->db->where('id',$id);
+    $this->db->update('tb_nilai',$data);
+    echo true;
   }
 
   public function login_process()
@@ -146,5 +164,35 @@ class Main extends CI_Controller
   {
     $this->db->where($where);
     $this->db->update($tb,$data);
+  }
+
+  public function detail_pemain($id='')
+  {
+      if (empty($id)) {
+        http_response_code(500);
+        exit;
+      }
+      $getPemain = $this->db->query("SELECT nama,lahir,tinggi_bdn,berat_bdn FROM tb_nilai WHERE id=$id")->row();
+      $outDetail = [
+        'nama' => $getPemain->nama,
+        'lahir' => $getPemain->lahir,
+        'tinggi_bdn' => $getPemain->tinggi_bdn,
+        'berat_bdn' => $getPemain->berat_bdn,
+        'umur' => $this->hitung_umur($getPemain->lahir),
+      ];
+      echo json_encode($outDetail);
+  }
+
+  private function hitung_umur($lahir='')
+  {
+
+      $tglLahir = empty($lahir) ? date('Y-m-d') : $lahir;
+      // $tglLahir = "1995-08-10";
+      $now = date('m')*date('d');
+      $exTglLahir = explode('-',$tglLahir);
+      $mulTglLahir = $exTglLahir[1]*$exTglLahir[2];
+      $divUmur = date('Y') - $exTglLahir[0];
+      $umur = $now >= $mulTglLahir ? $divUmur : $divUmur-1;
+      return $umur;
   }
 }

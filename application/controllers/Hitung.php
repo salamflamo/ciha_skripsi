@@ -343,11 +343,13 @@ class Hitung extends CI_Controller
               if ($key=='nama') {
                 $width = '120px';
                 $class = '';
+                $onclick = "onclick='detail($id,\"update\")'";
               } else {
                 $width = '35px';
                 $class = 'penilaian';
+                $onclick = "";
               }
-              $table .= "<td><input required class='form-control $class' style='height: 27px;width:$width' name='penilaian[$i][$key]' value='$value'</td>";
+              $table .= "<td><input $onclick required class='form-control $class' style='height: 27px;width:$width' name='penilaian[$i][$key]' value='$value'</td>";
             }
           }
           $table .= "<td><button type='button' onclick='hapus($id)' class='btn btn-xs btn-danger'>Hapus</button></td>";
@@ -552,7 +554,7 @@ class Hitung extends CI_Controller
 
     private function createTablePreferensi()
     {
-        $pref = $this->db->query("SELECT nama, hasil_pref FROM tb_prefrensi p
+        $pref = $this->db->query("SELECT n.id, nama, hasil_pref FROM tb_prefrensi p
           JOIN tb_nilai n ON p.id_nilai = n.id
           WHERE p.flag_untuk = $this->flag_untuk
           ORDER BY hasil_pref DESC")->result();
@@ -564,7 +566,7 @@ class Hitung extends CI_Controller
         foreach ($pref as $v) {
           $table .= "<tr>";
           $table .= "<td>".$i++."</td>";
-          $table .= "<td>".$v->nama."</td>";
+          $table .= "<td>".$v->nama." &nbsp;&nbsp;<button onclick='detail(".$v->id.",\"detail\")' class='btn btn-sm btn-default'>Detail</button></td>";
           $table .= "<td>".$v->hasil_pref."</td>";
           $table .= "</tr>";
         }
