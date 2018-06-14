@@ -193,7 +193,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <div class="col-xs-8">
-                                <label class="control-label">Lahir</label>
+                                <label class="control-label">Tanggal Lahir</label>
                                 <input required type="date" name="lahir" class="form-control" value="">
                               </div>
                             </div>
@@ -411,7 +411,7 @@
                 <input required type="text" id="update_nama" class="form-control" name="nama" value="">
               </div>
               <div class="form-group">
-                <label for="lahir">Lahir</label>
+                <label for="lahir">Tanggal Lahir</label>
                 <input required type="date" name="lahir" id="update_lahir" class="form-control" value="">
               </div>
               <div class="form-group">
