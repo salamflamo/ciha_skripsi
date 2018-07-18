@@ -167,7 +167,7 @@
                       </tr>
                     </table>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-3" style="display:none">
                     <h1>Informasi Pemain</h1>
                     <hr>
                     <!-- <div class="panel panel-default">
