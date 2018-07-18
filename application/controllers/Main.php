@@ -37,6 +37,15 @@ class Main extends CI_Controller
       // $data['page'] = 'login';
       $this->load->view('starter',$data);
   }
+
+  public function formasi()
+  {
+      $this->Auth_model->is_login();
+      $data['page'] = 'formasi';
+      $data['js'] = '<script src="'.base_url().'javascript/formasi.js"></script>';
+      $this->load->view('starter',$data);
+  }
+
   public function login()
   {
     if (isset($_SESSION['username']) && isset($_SESSION['session'])) {

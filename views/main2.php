@@ -337,6 +337,10 @@
                             <?php endforeach; ?>
                           </select>
                         </div>
+                        <div class="col-xs-2">
+                          <label class="control-label">Lihat Rekomendasi Formasi</label>
+                          <a target="_blank" href="<?= base_url();?>formasi" type="button" class="btn btn-default" name="button">Lihat >>>>>></a>
+                        </div>
                       </div>
                       <div class="row">
                         <div class="col-md-12">

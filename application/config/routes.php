@@ -52,5 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'main';
 $route['login'] = 'main/login';
 $route['logout'] = 'main/logout_process';
+$route['formasi'] = 'main/formasi';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

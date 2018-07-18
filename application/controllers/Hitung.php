@@ -12,36 +12,6 @@ class Hitung extends CI_Controller
         $this->load->model('Auth_model');
     }
 
-    private $target = [
-      'passing' => 1,
-      'servis' => 1,
-      'block' => 1,
-      'smash' => 1,
-      'receive' => 1,
-      'kekuatan' => 1,
-      'kelincahan' => 1,
-      'daya_lentur' => 1,
-      'daya_ledak_otot' => 1,
-      'daya_tahan' => 1,
-      'kecepatan' => 1,
-    ];
-
-    private $matriks = [
-      [
-        'nama' => 'Name',
-        'passing' => 1,
-        'servis' => 1,
-        'block' => 1,
-        'smash' => 1,
-        'receive' => 1,
-        'kekuatan' => 1,
-        'kelincahan' => 1,
-        'daya_lentur' => 1,
-        'daya_ledak_otot' => 1,
-        'daya_tahan' => 1,
-        'kecepatan' => 1,
-      ],
-    ];
 
     private $h_kuadrat = [];
     private $jum_kuadrat = [];
@@ -289,6 +259,9 @@ class Hitung extends CI_Controller
         }
         // echo "Langkah 9<br><br>";
         // print_r($this->preferensi);
+
+        #######note
+        // fungsi untuk menyimpan hasil preferensi ke database
         $this->simpanPrefrensi();
     }
     private function simpanPrefrensi()
@@ -304,19 +277,27 @@ class Hitung extends CI_Controller
       // NOTE: untuk memberikan nilai baru variabel global
       $this->setVariable($flag);
       // NOTE: untuk logika
+      // Langkah membuat kuadrat
       $this->kuadrat();
+      // Langkah membuat akar kuadrat
       $this->akarKuadrat();
+      // membuat normalisasi
       $this->normalisasi();
+      // hasil keputusan
       $this->keputusan();
+      // menghitung solusi idean positif dan negatif
       $this->solusiIdealPlusMinus();
+      // menghitung jarak antara positif
       $this->hitungDValue();
+      // menghitung hasil penjumlahan jarak antara
       $this->sumSqrtD();
+      // menghitung jarak antara negatif
       $this->hitungDValueNegatif();
+      // menghitung hasil penjumlahan jarak antara
       $this->sumSqrtDNegatif();
+      // hasil preferensi
       $this->hitungPrefrensi();
-      // for ($i=0; $i < count($this->preferensi); $i++) {
-      //   $this->db->insert('tb_prefrensi',['hasil_pref'=>$this->preferensi[$i],'flag_untuk'=>$flag]);
-      // }
+
     }
     private function createTableMatriks()
     {
@@ -359,200 +340,7 @@ class Hitung extends CI_Controller
         $table .= "</table>";
         return $table;
     }
-    // NOTE: ini sudah tidak dipakai, jika dipakai hilangkan saja tanda comment
-    /*
-    private function createTableKuadrat()
-    {
-        $table = "<h3>Langkah 2</h3>";
-        $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead>";
-        foreach ($this->h_kuadrat[0] as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$key."</td>";
-        }
-        $table .= "</thead>";
-        $table .= "<tbody>";
-        for ($i=0; $i < count($this->h_kuadrat); $i++) {
-          $table .= "<tr>";
-          foreach ($this->h_kuadrat[$i] as $key => $value) {
-            if ($key=='id') {
-              continue;
-            }
-            $table .= "<td>".$value."</td>";
-          }
-          $table .= "</tr>";
-        }
-        $table .= "</tbody>";
-        $table .= "</table>";
-        return $table;
-    }
-    private function createTableAkar()
-    {
-        $table = "";
-        $table = "<h3>Langkah 3</h3>";
-        $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead>";
-        $table .= "<td>Faktor</td>";
-        $table .= "<td>Total</td>";
-        $table .= "<td>Akar</td>";
-        $table .= "</thead>";
-        foreach ($this->jum_kuadrat as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<tr>";
-          $table .= "<td>".$key."</td>";
-          $table .= "<td>".$value."</td>";
-          $table .= "<td>".sqrt($value)."</td>";
-          $table .= "</tr>";
-        }
-        $table .= "</table>";
-        return $table;
-    }
-    private function createTableNormalisasi()
-    {
-        $table = "";
-        $table = "<h3>Langkah 4</h3>";
-        $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead>";
-        foreach ($this->h_normalisasi[0] as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$key."</td>";
-        }
-        $table .= "</thead>";
-        $table .= "<tbody>";
-        for ($i=0; $i < count($this->h_kuadrat); $i++) {
-          $table .= "<tr>";
-          foreach ($this->h_normalisasi[$i] as $key => $value) {
-            if ($key=='id') {
-              continue;
-            }
-            $table .= "<td>".$value."</td>";
-          }
-          $table .= "</tr>";
-        }
-        $table .= "</tbody>";
-        $table .= "</table>";
-        return $table;
-    }
-    private function createTableKeputusan()
-    {
-        $table = "";
-        $table = "<h3>Langkah 5</h3>";
-        $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead>";
-        foreach ($this->m_keputusan[0] as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$key."</td>";
-        }
-        $table .= "</thead>";
-        $table .= "<tbody>";
-        for ($i=0; $i < count($this->m_keputusan); $i++) {
-          $table .= "<tr>";
-          foreach ($this->m_keputusan[$i] as $key => $value) {
-            if ($key=='id') {
-              continue;
-            }
-            $table .= "<td>".$value."</td>";
-          }
-          $table .= "</tr>";
-        }
-        $table .= "</tbody>";
-        $table .= "</table>";
-        return $table;
-    }
-    private function createTableSolusiIdeal()
-    {
-        $table = "";
-        $table = "<h3>Langkah 6</h3>";
-        $table .= "<table class='table table-stripped table-hover'>";
-        $table .= "<thead>";
-        $table .= "<td>nama</td>";
-        foreach ($this->k_positif as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$key."</td>";
-        }
-        $table .= "</thead>";
-        $table .= "<tbody>";
-        $table .= "<tr><td>Y+</td>";
-        foreach ($this->k_positif as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$value."</td>";
-        }
-        $table .= "</tr><tr><td>Y-</td>";
-        foreach ($this->k_negatif as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$value."</td>";
-        }
-        $table .= "</tr></tbody></table>";
-        return $table;
-    }
-
-    private function createTableDvalue()
-    {
-
-      $table = "<h3>Langkah 7</h3>";
-      $table .= "<table class='table table-stripped table-hover'>";
-      $table .= "<thead>";
-      foreach ($this->d_value[0] as $key => $value) {
-        if ($key=='id') {
-          continue;
-        }
-        $table .= "<td>".$key."</td>";
-      }
-      $table .= "<td>D</td>";
-      $table .= "<td>Sum</td>";
-      $table .= "</thead>";
-
-      $table .= "<tbody>";
-      for ($i=0; $i < count($this->d_value); $i++) {
-        $table .= "<tr>";
-        foreach ($this->d_value[$i] as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$value."</td>";
-        }
-        $table .= "<td>D+</td>";
-        $table .= "<td>".$this->sum_d[$i]."</td>";
-        $table .= "</tr>";
-      }
-
-      for ($i=0; $i < count($this->d_value_n); $i++) {
-        $table .= "<tr>";
-        foreach ($this->d_value_n[$i] as $key => $value) {
-          if ($key=='id') {
-            continue;
-          }
-          $table .= "<td>".$value."</td>";
-        }
-        $table .= "<td>D-</td>";
-        $table .= "<td>".$this->sum_d_n[$i]."</td>";
-        $table .= "</tr>";
-      }
-      $table .= "</tbody>";
-      $table .= "</table>";;
-        // print_r($this->d_value);
-        // print_r($this->sum_d);
-        // print_r($this->d_value_n);
-        // print_r($this->sum_d_n);
-        return $table;
-    }
-    */
-
-    private function createTablePreferensi()
+       private function createTablePreferensi()
     {
         $pref = $this->db->query("SELECT n.id, nama, hasil_pref FROM tb_prefrensi p
           JOIN tb_nilai n ON p.id_nilai = n.id
@@ -585,21 +373,12 @@ class Hitung extends CI_Controller
         }
         $this->call($flag);
         // NOTE: untuk menampilkan data
+        ##### NOTE :
+        // menampilkan table matrik dengan data nama pemain dan nilainya
         $this->table_besar['penilaian'] = $this->createTableMatriks();
-        // $this->table_besar[] = $this->createTableKuadrat();
-        // $this->table_besar[] = $this->createTableAkar();
-        // $this->table_besar[] = $this->createTableNormalisasi();
-        // $this->table_besar[] = $this->createTableKeputusan();
-        // $this->table_besar[] = $this->createTableSolusiIdeal();
-        // $this->table_besar[] = $this->createTableDvalue();
+       // menampilkan table hasil preferensi per spesialisasi
         $this->table_besar['prefrensi'] = $this->createTablePreferensi();
-        // $this->createTablePreferensi();
-        // var_dump($this->h_kuadrat);
-        // echo json_encode($this->table_besar);
-        // $table = "";
-        // foreach ($this->table_besar as $key => $value) {
-        //   $table .= $value;
-        // }
+
         echo json_encode($this->table_besar);
     }
 
@@ -612,6 +391,168 @@ class Hitung extends CI_Controller
         } else {
           $this->db->where(['id_nilai'=>$id_nilai,'flag_untuk'=>$this->flag_untuk]);
           $this->db->update('tb_prefrensi',['hasil_pref'=>$n_pref]);
+        }
+    }
+
+    // prototype player auto formation
+    // NOTE: this function was made as posible as well, it will run not very well
+    public function ambil_formasi()
+    {
+        $this->simpan_nilai_formasi_pertama();
+        $this->simpan_nilai_formasi_kedua();
+        $this->simpan_nilai_formasi_ketiga();
+
+        $get = $this->db->query("SELECT p.id ,nama_spesialis,nama,tinggi_bdn,berat_bdn FROM tb_formasi f
+        JOIN tb_nilai n ON f.id_nilai = n.id JOIN tb_pengukuran p ON f.flag_untuk = p.id")->result_array();
+
+        echo json_encode($get);
+    }
+
+    private function get_tertinggi($arr,$index = 0)
+    {
+        $id_nilai = $arr[$index]['id_nilai'];
+        $ret_arr = [];
+        for ($i=0; $i < count($arr); $i++) {
+          $get = [];
+          if ($id_nilai == $arr[$i]['id_nilai']) {
+            $get['id'] = $arr[$i]['id'];
+            $get['hasil_pref'] = $arr[$i]['hasil_pref'];
+            $get['id_nilai'] = $arr[$i]['id_nilai'];
+          } else {
+            continue;
+          }
+          $ret_arr[] = $get;
+        }
+        // print_r($ret_arr);
+        $max = 0;
+        $arr_max = [];
+        for ($j=0; $j < count($ret_arr); $j++) {
+          if ($ret_arr[$j]['hasil_pref'] > $max) {
+            $max = $ret_arr[$j]['hasil_pref'];
+            $arr_max = $ret_arr[$j];
+          }
+        }
+        return $arr_max;
+    }
+
+    private function simpan_nilai_tertinggi($arr)
+    {
+        // if ($arr['id'] == 2) {
+        //   // $cek = $this->db->query("SELECT COUNT(*) AS jum FROM tb_formasi WHERE flag_untuk = 2")->result();
+        //   // if ($cek < 2) {
+        //   //   $id = $arr['id_nilai'];
+        //   //   $cek = $this->db->query("SELECT id_nilai AS jum FROM tb_formasi WHERE id_nilai = $id")->result();
+        //   //   if ($cek->id_nilai == $id) {
+        //   //     $this->db->where(['id_nilai' => $id, 'flag_untuk' => $arr['id']]);
+        //   //     // $this->db->update('tb_formasi',['id_nilai'=>$])
+        //   //   }
+        //   // }
+        // } else {
+        //   $flag_untuk = $arr['flag_untuk'];
+        //   $cek = $this->db->query("SELECT COUNT(*) AS jum FROM tb_formasi WHERE flag_untuk = $flag_untuk")->result();
+        //   if ($cek->jum < 1) {
+        //     $this->db->insert('tb_formasi',['id_nilai'=>$arr['id_nilai'],'flag_untuk'=>$arr['id']]);
+        //   }
+        // }
+        // menyimpan semua yang tertinggi
+        $flag_untuk = $arr['id'];
+        $id_nilai = $arr['id_nilai'];
+        $cek = $this->db->query("SELECT COUNT(*) AS jum FROM tb_formasi WHERE id_nilai = $id_nilai")->result();
+        // print_r($cek);
+        if ($cek[0]->jum < 1) {
+          $this->db->insert('tb_formasi',['id_nilai'=>$arr['id_nilai'],'flag_untuk'=>$arr['id']]);
+        }
+    }
+
+    // NOTE: fungsi utama
+    private function simpan_nilai_formasi_pertama()
+    {
+        $query = "SELECT * FROM tb_pengukuran peng JOIN (
+        	SELECT p.id AS id_pref, hasil_pref,id_nilai, nama, p.flag_untuk FROM tb_prefrensi p
+        	JOIN tb_nilai n ON p.id_nilai = n.id WHERE
+        	hasil_pref = (SELECT MAX(hasil_pref) FROM tb_prefrensi ps WHERE ps.flag_untuk = p.flag_untuk)
+        ) pn ON peng.id = pn.flag_untuk";
+        $rows = $this->db->query($query)->result_array();
+        $arr = [];
+        for ($i=0; $i < count($rows); $i++) {
+          $arr[] = $this->get_tertinggi($rows,$i);
+        }
+        // print_r($arr);
+        // menghapus semua isi table tb_formasi
+        $this->db->query("DELETE FROM tb_formasi");
+        // menyimpan hasil_pref terbesar satu persatu
+        for ($j=0; $j < count($arr); $j++) {
+          $this->simpan_nilai_tertinggi($arr[$j]);
+        }
+        // menyimpan untuk hasil_pref terbesar kedua
+        // $this->simpan_nilai_kedua();
+    }
+
+    private function simpan_nilai_formasi_kedua()
+    {
+        // $cek = $this->db->query("
+        //   SELECT id FROM tb_pengukuran WHERE id NOT IN (SELECT flag_untuk AS id FROM tb_formasi)
+        // ")->result();
+        // foreach ($cek as $v) {
+        //   $get = null;
+        //   if ($v->id == 2) {
+        //     $query = "SELECT flag_untuk, id_nilai FROM tb_prefrensi WHERE flag_untuk = 2 ORDER BY hasil_pref DESC LIMIT 2";
+        //     $get = $this->db->query($query)->result();
+        //   } else {
+        //     $id = $v->id;
+        //     $query = "SELECT flag_untuk, id_nilai FROM tb_prefrensi WHERE flag_untuk = $id ORDER BY hasil_pref DESC LIMIT 1,1";
+        //     $get = $this->db->query($query)->result();
+        //   }
+        //   foreach ($get as $val) {
+        //     $this->db->insert('tb_formasi',['id_nilai'=>$val->id_nilai,'flag_untuk'=>$val->flag_untuk]);
+        //   }
+        // }
+        // $query = "SELECT id,flag_untuk, id_nilai FROM tb_prefrensi WHERE flag_untuk = $id ORDER BY hasil_pref DESC LIMIT 1,1";
+        $query = "SELECT * FROM tb_pengukuran peng JOIN (
+        	SELECT p.id AS id_pref, hasil_pref,id_nilai, nama, p.flag_untuk FROM tb_prefrensi p
+        	JOIN tb_nilai n ON p.id_nilai = n.id WHERE
+        	hasil_pref = (SELECT hasil_pref FROM tb_prefrensi ps WHERE ps.flag_untuk = p.flag_untuk
+            ORDER BY hasil_pref DESC LIMIT 1,1)
+        ) pn ON peng.id = pn.flag_untuk WHERE peng.id NOT IN (SELECT flag_untuk AS id FROM tb_formasi)";
+        // $query = "SELECT id FROM tb_pengukuran WHERE id NOT IN (SELECT flag_untuk AS id FROM tb_formasi)"
+        $rows = $this->db->query($query)->result_array();
+        $arr = [];
+        for ($i=0; $i < count($rows); $i++) {
+          $arr[] = $this->get_tertinggi($rows,$i);
+        }
+        // print_r($arr);
+        for ($j=0; $j < count($arr); $j++) {
+          $this->simpan_nilai_tertinggi($arr[$j]);
+        }
+    }
+
+    private function simpan_nilai_formasi_ketiga()
+    {
+        $cek_if_wing_not_exists = $this->db->query("SELECT COUNT(*) AS jum FROM tb_formasi WHERE flag_untuk = 2")->result();
+        $query = "SELECT id_nilai, flag_untuk, hasil_pref FROM tb_prefrensi WHERE
+        id_nilai NOT IN (SELECT id_nilai FROM tb_formasi)
+        AND flag_untuk NOT IN (SELECT flag_untuk FROM tb_formasi)
+        ORDER BY hasil_pref DESC LIMIT 2";
+        $arr = $this->db->query($query)->result_array();
+        if (count($arr)==0) {
+          if ($cek_if_wing_not_exists[0]->jum==1) {
+            $ambil = $this->db->query("SELECT id_nilai, flag_untuk, hasil_pref
+            FROM tb_prefrensi WHERE
+            id_nilai NOT IN (SELECT id_nilai FROM tb_formasi)
+            AND flag_untuk = 2
+            ORDER BY hasil_pref DESC LIMIT 1,1")->row();
+            $this->db->insert('tb_formasi',['id_nilai'=>$ambil->id_nilai,'flag_untuk'=>$ambil->flag_untuk]);
+          }
+        } else {
+          if ($arr[0]['flag_untuk'] == 2) {
+            if ($cek_if_wing_not_exists[0]->jum == 0) {
+              for ($i=0; $i < count($arr); $i++) {
+                $this->db->insert('tb_formasi',['id_nilai'=>$arr[$i]['id_nilai'],'flag_untuk'=>$arr[$i]['flag_untuk']]);
+              }
+            }
+          } else {
+            $this->db->insert('tb_formasi',['id_nilai'=>$arr[0]['id_nilai'],'flag_untuk'=>$arr[0]['flag_untuk']]);
+          }
         }
     }
 
