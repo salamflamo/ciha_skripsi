@@ -90,14 +90,6 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Rekomendasi Formasi
-        <small>Bentuk Formasi</small>
-      </h1>
-    </section>
-
     <!-- Main content -->
     <section class="content container-fluid">
 
@@ -108,19 +100,19 @@
           <div class="col-lg-12">
             <div class="box box-info">
               <div class="box-header with-border">
-                <h3>Gambar</h3>
+                <h1 style="text-align:center">Rekomendasi Posisi</h1>
               </div>
               <div class="box-body">
                 <style media="screen">
                   table {
-                    border: 1px solid black;
+                    border: 2px solid black;
                     width: 100%;
                   }
                   td {
                     font-size: 20px;
                     text-align: center;
                     padding: 38px;
-                    border-bottom: 1px solid black;
+                    border-bottom: 2px solid black;
                     background-color: green;
                     color: white;
                   }
@@ -139,37 +131,51 @@
                   small.pemain {
                     font-size: 18;
                   }
+
+                  small.number {
+                    text-align: center;
+                    border: 2px solid white;
+                    padding: 3px;
+                    display: block;
+                    width: 23%;
+                    height: 32%;
+                    border-radius: 100%;
+                    position: relative;
+                    margin-left: auto;
+                    margin-right: auto;
+                  }
                 </style>
                 <div class="row">
+                  <div class="col-lg-1">
+
+                  </div>
                   <div class="col-lg-7">
                     <table>
                       <tr class="atas">
                         <td class="tengah-bawah">
-                          Wing Spiker <br> <small  id="w1" class="pemain"></small>
+                        <small class="number">4</small> Wing Spiker <br> <small  id="w1" class="pemain"></small>
                         </td>
-                        <td>Middle Blocker
+                        <td class="tengah-atas"> <small class="number">3</small> Middle Blocker
                           <br> <small id="m" class="pemain"></small>
                         </td>
-                        <td class="tengah-bawah">Wing Spiker
+                        <td class="tengah-bawah"> <small class="number">2</small> Wing Spiker
                           <br> <small id="w2" class="pemain"></small>
                         </td>
                       </tr>
                       <tr class="bawah">
-                        <td >Universaler
+                        <td > <small class="number">5</small> Universaler
                           <br> <small id="u" class="pemain"></small>
                         </td>
-                        <td class="tengah-atas">Libero
+                        <td class="tengah-atas"> <small class="number">6</small> Libero
                           <br> <small id="l" class="pemain"></small>
                         </td>
-                        <td >Setter
+                        <td > <small class="number">1</small> Setter
                           <br> <small id="s" class="pemain"></small>
                         </td>
                       </tr>
                     </table>
                   </div>
-                  <div class="col-md-3" style="display:none">
-                    <h1>Informasi Pemain</h1>
-                    <hr>
+                  <div class="col-md-3" style="">
                     <!-- <div class="panel panel-default">
                       <div class="panel-heading">
                         <h4>Nama: anu</h4>

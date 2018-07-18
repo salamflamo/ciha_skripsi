@@ -402,8 +402,9 @@ class Hitung extends CI_Controller
         $this->simpan_nilai_formasi_kedua();
         $this->simpan_nilai_formasi_ketiga();
 
-        $get = $this->db->query("SELECT p.id ,nama_spesialis,nama,tinggi_bdn,berat_bdn FROM tb_formasi f
-        JOIN tb_nilai n ON f.id_nilai = n.id JOIN tb_pengukuran p ON f.flag_untuk = p.id")->result_array();
+        $get = $this->db->query("SELECT p.id,nama_spesialis,nama,hasil_pref FROM tb_formasi f
+        JOIN tb_nilai n ON f.id_nilai = n.id JOIN tb_pengukuran p ON f.flag_untuk = p.id
+        JOIN tb_prefrensi pf ON pf.id_nilai = n.id AND pf.flag_untuk = p.id")->result_array();
 
         echo json_encode($get);
     }
@@ -479,7 +480,11 @@ class Hitung extends CI_Controller
         }
         // print_r($arr);
         // menghapus semua isi table tb_formasi
-        $this->db->query("DELETE FROM tb_formasi");
+        $ids = [1,2,3,4,5];
+        for ($k=0; $k < count($ids); $k++) {
+          $this->db->where('id',$ids[$k]);
+          $this->db->delete('tb_formasi');
+        }
         // menyimpan hasil_pref terbesar satu persatu
         for ($j=0; $j < count($arr); $j++) {
           $this->simpan_nilai_tertinggi($arr[$j]);

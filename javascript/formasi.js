@@ -10,8 +10,8 @@ $.ajax({
       r.forEach(function (e) {
         el += '<div class="isi">' +
           '<h3>Nama : '+ e.nama +'</h3>' +
-          '<p>Tinggi Badan : '+ e.tinggi_bdn +' cm</p>' +
-          '<p>Berat Badan : '+ e.berat_bdn +' Kg</p>' +
+          '<p>Posisi : '+ e.nama_spesialis +'</p>' +
+          '<p>Prefrensi : '+ e.hasil_pref +'</p>' +
         '</div>';
         if (e.id == 1) {
           $('#s').text(e.nama);
